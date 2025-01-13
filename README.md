@@ -1,5 +1,12 @@
 # Php Rest API Application
 
+### Installation
+Run the Composer command to install the latest stable version of RestJS:
+
+```
+composer required restjs/php-rest-api
+```
+
 ### Used Feature
 > `json`, `headers_authorization`, `upload_file`, `access_token`
 
