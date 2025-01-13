@@ -1,7 +1,11 @@
 <?php
 
+/* Include Varibles File */
+include 'env.php';
+
 /* Include View Files */
 include 'views/header.view.php';
+include 'views/access_token.view.php';
 include 'views/table.view.php';
 
 /* Check ID */

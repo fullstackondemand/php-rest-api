@@ -1,8 +1,5 @@
 <?php 
 
-/* Include Varibles File */
-include 'env.php';
-
 /* Create connection */
 $con = new mysqli(SERVER_NAME, USER_NAME, PASSWORD, DATABASE_NAME);
             
