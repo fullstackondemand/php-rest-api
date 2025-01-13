@@ -9,4 +9,4 @@ composer.lock
 *.pem
 
 # local env files
-env.php
+.env

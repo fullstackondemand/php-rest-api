@@ -4,6 +4,7 @@
 namespace RestJS\PhpRestApi;
 
 /* Use External Class */
+use Dotenv\Dotenv;
 use RestJS\PhpRestApi\Controller\File;
 use RestJS\PhpRestApi\Controller\Method;
 use RestJS\PhpRestApi\View\Auth;
@@ -14,14 +15,15 @@ class Rest {
     public static function execute($dir) {
 
         /* Include Varibles File */
-        include $dir . '/env.php';
+        $dotenv = Dotenv::createImmutable($dir);
+        $dotenv->load();
 
         /* Include View Function */
         Auth::accessToken();
         $table = Table::checkTable();
 
         /* Check ID */
-        if (!isset($_GET['id'])) { $id = null; } 
+        if (!isset($_GET['id'])) { $id = null; }
         else {  $id = $_GET['id']; }
 
         /* Check Upload File */
