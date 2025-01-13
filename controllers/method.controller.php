@@ -5,8 +5,8 @@ class MethodController {
     
     function __construct() { }
 
-    /* Check Method Class */
-    function MethodController($method, $table, $id) {
+    /* Check Method Function */
+    function methodController($method, $table, $id) {
         switch ($method) {
 
             /* GET Method */
@@ -45,7 +45,7 @@ class MethodController {
             /* DELETE Method */
             case "DELETE":
 
-                /* Include PUT Model File */
+                /* Include DELETE Model File */
                 include 'models/delete.model.php' ;
                 $delete = new DeleteModel();
                 $delete->deleteData($table, $id);
