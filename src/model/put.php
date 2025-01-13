@@ -1,12 +1,16 @@
 <?php
 
-/* PUT Class */
-class PutModel {
+/* Define Namespace */
+namespace RestJS\PhpRestApi\Model;
 
-  function __construct() { }
+/* Use External Class */
+use RestJS\PhpRestApi\View\Database;
+
+/* PUT Class */
+class Put {
 
   /* PUT Data */
-  function putData($table, $id, $data) {
+  public static function putData($table, $id, $data) {
 
     /* Check Data and Check ID */
     if(!isset($data) && !isset($id)) {
@@ -15,7 +19,7 @@ class PutModel {
     }
 
     /* Include Database File */
-    include 'views/database.view.php';
+    $con = Database::connection();
 
     /* Update Data */
     $data = json_decode($data, true);

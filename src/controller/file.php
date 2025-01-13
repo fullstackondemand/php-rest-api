@@ -1,12 +1,14 @@
 <?php 
 
+/* Define Namespace */
+namespace RestJS\PhpRestApi\Controller;
+
 /* File Controller Class */
-class FileController {
-    
-    function __construct() { }
+class File {
 
     /* Check Method Function */
-    function fileController($method) {
+    public static function fileUpload($dir, $method) {
+        
         switch ($method) {
     
             /* POST Method */
@@ -35,15 +37,9 @@ class FileController {
             
               /* Upload File */
               if(move_uploaded_file($_FILES['upload']['tmp_name'], $url)){
-                
-                /* Check HTTPS */
-                if(isset($_SERVER['HTTPS'])){
-                  $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
-                }
-                else{ $protocol = 'http'; }
 
                 /* Upload File Link */
-                $url = $protocol."://".$_SERVER['SERVER_NAME'] ."/php-rest-api/".$url;
+                $url = $dir ."/".$url;
 
                 echo json_encode(array('status'=>'Success', 'message'=>'File is successful uploaded.', 'file_url' => $url));
 
@@ -55,15 +51,9 @@ class FileController {
 
               /* Recive Delete File URL */
               $data = json_decode(file_get_contents('php://input'), true);
-
-              /* Check HTTPS */
-              if(isset($_SERVER['HTTPS'])){
-                $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
-              }
-              else{ $protocol = 'http'; }
               
               /* Remove Host Link in URL */
-              $url = str_replace($protocol."://".$_SERVER['SERVER_NAME'] ."/php-rest-api/", "",$data['upload']);
+              $url = str_replace($dir ."/", "",$data['upload']);
 
               /* Delete File */
               if(unlink($url)){
@@ -77,5 +67,3 @@ class FileController {
         }
     }
 }
-
-?>

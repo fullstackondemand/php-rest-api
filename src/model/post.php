@@ -1,21 +1,25 @@
 <?php
 
-/* POST Class */
-class PostModel {
+/* Define Namespace */
+namespace RestJS\PhpRestApi\Model;
 
-  function __construct() { }
+/* Use External Class */
+use RestJS\PhpRestApi\View\Database;
+
+/* POST Class */
+class Post {
 
   /* POST Data */
-  function postData($table, $data) {
+  public static function postData($table, $data) {
 
     /* Check Data */
-    if(!isset($data)) {
-      echo json_encode(array('status'=>'Fail', 'error'=>'Please provide valid input.'));
+    if (!isset($data)) {
+      echo json_encode(array('status' => 'Fail', 'error' => 'Please provide valid input.'));
       die();
     }
 
     /* Include Database File */
-    include 'views/database.view.php';
+    $con = Database::connection();
 
     /* Insert Data */
     $data = json_decode($data, true);
@@ -38,11 +42,12 @@ class PostModel {
     $sql = "INSERT INTO $table ($keys) VALUES ('$val')";
 
     if ($con->query($sql) === TRUE) {
-      echo json_encode(array('status'=>'Success', 'message'=>'Data is Inserted.'));
+      echo json_encode(array('status' => 'Success', 'message' => 'Data is Inserted.'));
     }
     else {
-      echo json_encode(array('status'=>'Fail', 'error'=>'Please provide valid input.'));
+      echo json_encode(array('status' => 'Fail', 'error' => 'Please provide valid input.'));
       die();
     }
+    
   }
 }

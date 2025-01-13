@@ -1,12 +1,11 @@
 # Php Rest API Application
 
-
 ### Used Feature
 > `json`, `headers_authorization`, `upload_file`, `access_token`
 
 ## Quick links
 1. [**Get API**](http://localhost/php-rest-api/test/access_token=<Access_Token>) for `GET`, `POST`, `PUT`, `DELETE`
-2. [**Upload File**](http://localhost/php-rest-api/test/access_token=<Access_Token>) for `POST`, `DELETE`
+2. [**Upload File**](http://localhost/php-rest-api/file/access_token=<Access_Token>) for `POST`, `DELETE`
 
 ### API Routes
 | HTTP Method	| Path | Action | Scope | Desciption  |

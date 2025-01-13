@@ -1,19 +1,23 @@
 <?php
 
-/* GET Class */
-class GetModel {
+/* Define Namespace */
+namespace RestJS\PhpRestApi\Model;
 
-  function __construct() { }
+/* Use External Class */
+use RestJS\PhpRestApi\View\Database;
+
+/* GET Class */
+class Get {
 
   /* GET All Data */
-  function getData($table, $id) {
+  public static function getData($table, $id) {
 
     /* Check ID */
     if(!isset($id)) { $where = ''; }
      else { $where = "WHERE id = $id"; }
 
     /* Include Database File */
-    include 'views/database.view.php';
+    $con = Database::connection();
 
     /* Get All Data */
     $sql = "SELECT * FROM  $table $where";

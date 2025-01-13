@@ -1,2 +1,12 @@
-# Php  Variables Files
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/vendor/
+composer.lock
+
+# misc
+.DS_Store
+*.pem
+
+# local env files
 env.php
