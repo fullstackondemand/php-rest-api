@@ -6,10 +6,11 @@ use Slim\Factory\AppFactory;
 require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
+$app->setBasePath("/api");
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$app->get('/api/', function (Request $request, Response $response, $args) {
+$app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hello {$_ENV['NAME']}!");
     return $response;
 });
