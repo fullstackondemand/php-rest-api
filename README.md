@@ -17,8 +17,8 @@ composer required restjs/php-rest-api
 ### API Routes
 | HTTP Method	| Path | Action | Scope | Desciption  |
 | ----- | ----- | ----- | ---- |------------- |
-| GET      | /<table_name> | index | data:list | Get all data
-| POST     | /<table_name> | store | data:create | Create an data
-| GET      | /<table_name>/{_id} | show | data:read |  Fetch an data by id
-| PUT      | /<table_name>/{_id} | update | data:write | Update an data by id
-| DELETE   | /<table_name>/{_id} | destroy | data:delete | Delete an data by id
+| GET      | /<collection_name> | index | document:list | Get all document
+| POST     | /<collection_name> | store | document:create | Create an document
+| GET      | /<collection_name>/{_id} | show | document:read |  Fetch an document by id
+| PUT      | /<collection_name>/{_id} | update | document:write | Update an document by id
+| DELETE   | /<collection_name>/{_id} | destroy | document:delete | Delete an document by id

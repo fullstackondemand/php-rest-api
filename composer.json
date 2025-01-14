@@ -1,6 +1,7 @@
 {
     "name": "restjs/php-rest-api",
     "description": "Create Rest API Application",
+    "type": "package",
     "keywords": [
         "php",
         "composer",
@@ -17,7 +18,28 @@
             "RestJS\\PhpRestApi\\": "src/"
         }
     },
-    
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "RestJS/php-rest-api",
+                "version": "v2",
+                "source": {
+                    "url": "https://github.com/fullstackondemand/php-rest-api.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "authors": [
+        {
+            "name": "Pramod Singh",
+            "email": "spramodgusain@gmail.com",
+            "homepage": "https://github.com/fullstackondemand",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
