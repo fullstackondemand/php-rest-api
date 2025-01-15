@@ -11,7 +11,7 @@ $app = AppFactory::create();
 $app->setBasePath("/api");                                       // set base path
 $app->addBodyParsingMiddleware();                                          // It is used to get json and form body data
 $app->add(new TrailingSlash(trailingSlash: true));             // It is used to stop shash error
-$app->addErrorMiddleware(false, false, false);           // It is used to get erors
+$app->addErrorMiddleware(boolval($_ENV['SHOW_ERROR']), boolval($_ENV['SHOW_ERROR']), boolval($_ENV['SHOW_ERROR']));           // It is used to get erors
 
 /** Routers */
 $app->get('/category/', [Controller::class, "findAll"]);
