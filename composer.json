@@ -9,7 +9,10 @@
         "web-services",
         "jwt-authentication",
         "my-sql",
-        "slim"
+        "slim",
+        "doctrine-orm",
+        "symfony-cache",
+        "php-di-container"
     ],
     "homepage": "https://github.com/fullstackondemand/php-rest-api",
     "license": "MIT",
@@ -29,9 +32,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "7.1.*|7.2.*|7.3.*|7.4.*|8.0.*|8.1.*",
         "vlucas/phpdotenv": "^5.6",
         "slim/slim": "4.*",
-        "slim/psr7": "^1.7"
+        "slim/psr7": "^1.7",
+        "doctrine/orm": "^2.20",
+        "php-di/php-di": "^7.0",
+        "symfony/cache": "^6.0"
     }
 }
