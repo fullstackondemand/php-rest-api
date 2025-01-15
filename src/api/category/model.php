@@ -1,47 +1,14 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Api\Category;
-use Doctrine\ORM\EntityManager;
-use RestJS\Api\Category\Category as Table;
+use \RestJS\Trait\Model as CoreModel;
+use RestJS\Api\Category\Category;
 
 class Model {
 
     /** Variables Declaration */
-    private $queryBuilder;
+    private $table = Category::class;
 
-    public function __construct(private EntityManager $entityManager) {
-        $this->queryBuilder = $entityManager->createQueryBuilder();
-    }
-
-    /** Fetch all data */
-    public function all(): array {
-        return $this->queryBuilder->select('q')->from(Table::class, 'q')->getQuery()->getArrayResult();
-    }
-
-    /** Fetch data by id */
-    public function find(mixed $value): array {
-        return $this->queryBuilder->select('q')->from(Table::class, 'q')->where("q.id = :id")->setParameter(":id", $value)->getQuery()->getArrayResult();
-    }
-
-    /** Delete data by id */
-    public function delete(string $id) {
-        return $this->queryBuilder->delete(Table::class, 'q')->where("q.id = :id")->setParameter(':id', $id)->getQuery()->execute();
-    }
-
-    /** Update data by id */
-    public function update(array $args, string $id) {
-        $result = 0;
-        foreach ($args as $key => $value)
-            $result = $this->queryBuilder->update(Table::class, "q")->set("q.$key", ":$key")->where("q.id = :id")->setParameter(":$key", $value)->setParameter('id', $id)->getQuery()->execute();
-        return $result;
-    }
-
-    /** Insert data */
-    public function insert(array $args) {
-        $data = new Table;
-        foreach ($args as $key => $value)
-            $data->__set($key, $value);
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
-    }
+    /** Use core model functions */
+    use CoreModel;
 }
