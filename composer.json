@@ -17,6 +17,9 @@
     "homepage": "https://github.com/fullstackondemand/php-rest-api",
     "license": "MIT",
     "autoload": {
+        "files": [
+            "src/function.php"
+        ],
         "psr-4": {
             "RestJS\\": "src/"
         }
