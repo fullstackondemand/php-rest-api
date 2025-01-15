@@ -8,21 +8,34 @@ use function RestJS\response;
 /** Core Controller Functions */
 trait Controller {
 
-    /** Fetch all data */
-    public function findAll($req, $res) {
+     /** Fetch all data */
+     public function findAll($req, $res) {
         $result = $this->model->all();
         return response($req, $res, new Response(data: $result));
     }
 
     /** Fetch data by id */
     public function findById($req, $res, $args) {
-        $result = $this->model->find($args['id']);
+        $result = $this->model->where('id', $args['id']);
         count($result) == 0 && throw new HttpBadRequestException($req, "Something went wrong...");
         return response($req, $res, args: new Response(data: $result));
     }
 
+    /** Fetch data By slug */
+    public function findBySlug($req, $res, $args)  {
+        $result = $this->model->where('slug', $args['slug']);
+        count($result) == 0 && throw new HttpBadRequestException($req, "Something went wrong...");
+        return response($req, $res, args: new Response(data: $result));
+    }
+
+    /** Selected content fetch all data */
+    public function selectContent($req, $res, $args)  {
+        $result = $this->model->select(['title']);
+        return response($req, $res, args: new Response(data: $result));
+    }
+
     /** Delete data by id */
-    public function deleteById($req, $res, $args) {
+    public function deleteById($req, $res, $args)  {
         $result = $this->model->delete($args['id']);
         $result == 0 && throw new HttpBadRequestException($req, "Something went wrong...");
         return response($req, $res, new Response(message: "This item has been successfully removed.", data: $result));
