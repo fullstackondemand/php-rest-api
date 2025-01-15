@@ -8,6 +8,7 @@ $app = AppFactory::create();
 
 /** Middlewares */
 $app->setBasePath("/api");                   // set base path
+$app->addBodyParsingMiddleware();                      // It is used to get json and form body data
 
 /** Routers */
 $app->get('/category/', [Controller::class, "findAll"]);
