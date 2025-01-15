@@ -6,10 +6,15 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use RestJS\Trait\GetterAndSetter;
 
 #[Entity]
 #[Table('category')]
 class Category {
+
+    // Get and Set methods
+    use GetterAndSetter;
+
     #[Id]
     #[Column, GeneratedValue]
     private int $id;
