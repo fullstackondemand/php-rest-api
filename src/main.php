@@ -9,5 +9,9 @@ $app = AppFactory::create();
 /** Middlewares */
 $app->setBasePath("/api");                   // set base path
 
-/** Router */
-$app->get('/blog', [Controller::class, "findAll"]);
+/** Routers */
+$app->get('/category/', [Controller::class, "findAll"]);
+$app->get('/category/{id:[0-9]+}/', [Controller::class, "findById"]);
+$app->put('/category/{id:[0-9]+}/', [Controller::class, "updateById"]);
+$app->post('/category/', [Controller::class, "create"]);
+$app->delete('/category/{id:[0-9]+}/', [Controller::class, "deleteById"]);

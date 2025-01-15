@@ -9,9 +9,33 @@ class Controller {
 
     function __construct(private Model $model) { }
 
-    /** Fetch All Data */
-    function findAll($req, $res) {
+    /** Fetch all data */
+    public function findAll($req, $res) {
         $result = $this->model->all();
         return response($req, $res, new Response(data: $result));
+    }
+
+    /** Fetch data by id */
+    public function findById($req, $res, $args) {
+        $result = $this->model->find( $args['id']);
+        return response($req, $res, args: new Response(data: $result));
+    }
+
+    /** Delete data by id */
+    public function deleteById($req, $res, $args) {
+        $result = $this->model->delete($args['id']);
+        return response($req, $res, new Response(message: "This item has been successfully removed.", data: $result));
+    }
+
+    /** Insert data */
+    public function create($req, $res, $args) {
+        $this->model->insert($req->getParsedBody());
+        return response($req, $res, new Response(message: "This item has been successfully added."));
+    }
+
+    /** Update by id */
+    public function updateById($req, $res, $args) {
+        $result = $this->model->update($req->getParsedBody(), $args["id"]);
+        return response($req, $res, new Response(message: "This item has been successfully updated.", data: $result));
     }
 }
