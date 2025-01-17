@@ -1,21 +1,14 @@
 <?php
-use RestJS\Database;
+use RestJS\App;
+use RestJS\Api\Category\Router as CategoryRouter;
 
 require __DIR__ . '/vendor/autoload.php';
 
-/** Environment Variables */
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+/** Create Application */
+$app = App::create(__DIR__);
 
-/** Headers Variables */
-header("Access-Control-Allow-Origin: {$_ENV['CORS_ORIGIN']}");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+/** Routers */
+$app->group('/category', CategoryRouter::class);
 
-/** External Files */
-Database::connection();
-require 'src/main.php';
-
-/** App Execute or Run */
+/** Application Execute or Run */
 $app->run();
