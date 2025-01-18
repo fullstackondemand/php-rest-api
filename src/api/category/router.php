@@ -11,5 +11,6 @@ class Router {
         $router->put('/{id:[0-9]+}/', [Controller::class, "updateById"]);
         $router->post('/', [Controller::class, "create"]);
         $router->delete('/{id:[0-9]+}/', [Controller::class, "deleteById"]);
+        $router->get('/{filter:[a-z-,_A-Z]+}/', [Controller::class, "selectContent"]);
     }
 }

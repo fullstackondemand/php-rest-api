@@ -30,7 +30,7 @@ trait Controller {
 
     /** Selected content fetch all data */
     public function selectContent($req, $res, $args)  {
-        $result = $this->model->select(['title']);
+        $result = $this->model->select(explode(",", $args['filter']));
         return response($req, $res, args: new Response(data: $result));
     }
 
