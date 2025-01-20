@@ -21,8 +21,9 @@ function ManyToOne($many, $one, $property) {
     $result = [];
 
     foreach ($many as $manyItem):
-        $manyItem[$property] = array_filter($one, fn($item) => $manyItem[$property] == $item['id']);
-        array_push($result, ...$manyItem);
+        $filter = array_filter($one, fn($item) => $manyItem[$property] == $item['id']);
+        $manyItem[$property] = [...$filter][0];
+        array_push($result, $manyItem);
     endforeach;
 
     return $result;
