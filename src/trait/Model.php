@@ -26,15 +26,28 @@ trait Model {
     /** Update data by id */
     public function update(array $args, string $id) {
         $result = 0;
-        foreach ($args as $key => $value)
-            $result = $this->queryBuilder->update($this->table, "q")->set("q.$key", ":$key" )->where("q.id = :id")->setParameter(":$key", $value)->setParameter('id', $id)->getQuery()->execute();
+
+        foreach ($args as $key => $value):
+            if ($key == 'password')
+                $value = password_hash($value, PASSWORD_BCRYPT);
+
+            $result = $this->queryBuilder->update($this->table, "q")->set("q.$key", ":$key")->where("q.id = :id")->setParameter(":$key", $value)->setParameter('id', $id)->getQuery()->execute();
+        endforeach;
+
         return $result;
     }
 
     /** Insert data */
     public function insert(array $args) {
         $data = new $this->table;
-        foreach ($args as $key => $value) $data->__set($key, $value);
+
+        foreach ($args as $key => $value):
+            if ($key == 'password')
+                $value = password_hash($value, PASSWORD_BCRYPT);
+
+            $data->__set($key, $value);
+        endforeach;
+
         $this->entityManager->persist($data);
         $this->entityManager->flush();
     }
