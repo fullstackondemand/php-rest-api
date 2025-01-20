@@ -14,7 +14,7 @@ trait Model {
     }
 
     /** Fetch all data */
-    public function all(): array {
+    public function fetch(): array {
         return $this->queryBuilder->select('q')->from($this->table, 'q')->getQuery()->getArrayResult();
     }
 

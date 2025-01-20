@@ -7,7 +7,7 @@ use RestJS\Api\Category\Model;
 class Controller {
 
     function __construct(private Model $model) {
-        $this->result = $this->model->all();
+        $this->result = $this->model->fetch();
     }
 
     /** Use core controller functions */
