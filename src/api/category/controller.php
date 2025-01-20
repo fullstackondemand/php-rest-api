@@ -6,7 +6,9 @@ use RestJS\Api\Category\Model;
 
 class Controller {
 
-    function __construct(private Model $model) {}
+    function __construct(private Model $model) {
+        $this->result = $this->model->all();
+    }
 
     /** Use core controller functions */
     use CoreController;

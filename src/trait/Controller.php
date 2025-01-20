@@ -7,21 +7,24 @@ use function RestJS\response, RestJS\checkNull;
 /** Core Controller Functions */
 trait Controller {
 
+      /** Variables Declaration */
+    private $result;
+
      /** Fetch all data */
      public function findAll($req, $res) {
-        return response($req, $res, new Response(data: $this->model->all()));
+        return response($req, $res, new Response(data: $this->result));
     }
 
     /** Fetch data by id */
     public function findById($req, $res, $args) {
-        $result = array_filter($this->model->all(), fn($item) => $item['id'] == $args['id']);
-        checkNull(count(...$result) , $req);
+        $result = array_filter($this->result, fn($item) => $item['id'] == $args['id']);
+        checkNull($result, $req);
         return response($req, $res, args: new Response(data: [...$result]));
     }
 
     /** Fetch data By slug */
     public function findBySlug($req, $res, $args)  {
-        $result = array_filter($this->model->all(), fn($item) => $item['slug'] == $args['slug']);
+        $result = array_filter($this->result, fn($item) => $item['slug'] == $args['slug']);
         checkNull(count($result), $req);
         return response($req, $res, args: new Response(data: [...$result]));
     }
