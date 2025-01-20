@@ -17,7 +17,7 @@ trait Controller {
         $result = $this->result;
         $filter = $req->getQueryParams()['filter'] ?? null;
         
-        /** Selected content fetch all data */
+        /** Selected column fetch all data */
         if ($filter):
             $result = [];
             $filter = explode(",", $filter);
@@ -29,17 +29,11 @@ trait Controller {
         return response($req, $res, new Response(data: $result));
     }
 
-    /** Fetch data by id */
-    public function findById($req, $res, $args) {
-        $result = array_filter($this->result, fn($item) => $item['id'] == $args['id']);
+    /** Fetch data by Column */
+    public function findByColumn($req, $res, $args) {
+        foreach ($args as $key => $value)
+        $result = array_filter($this->result, fn($item) => $item[$key] == $args[$key]);
         checkNull($result, $req);
-        return response($req, $res, args: new Response(data: [...$result]));
-    }
-
-    /** Fetch data By slug */
-    public function findBySlug($req, $res, $args)  {
-        $result = array_filter($this->result, fn($item) => $item['slug'] == $args['slug']);
-        checkNull(count($result), $req);
         return response($req, $res, args: new Response(data: [...$result]));
     }
 
