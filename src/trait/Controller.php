@@ -7,12 +7,26 @@ use function RestJS\response, RestJS\checkNull;
 /** Core Controller Functions */
 trait Controller {
 
-      /** Variables Declaration */
+    /** Variables Declaration */
     private $result;
 
      /** Fetch all data */
      public function findAll($req, $res) {
-        return response($req, $res, new Response(data: $this->result));
+
+        /** Variables Declaration */
+        $result = $this->result;
+        $filter = $req->getQueryParams()['filter'] ?? null;
+        
+        /** Selected content fetch all data */
+        if ($filter):
+            $result = [];
+            $filter = explode(",", $filter);
+            
+            foreach ($this->result as $item)
+            array_push($result, array_intersect_key($item, array_flip($filter)));
+        endif;
+
+        return response($req, $res, new Response(data: $result));
     }
 
     /** Fetch data by id */
