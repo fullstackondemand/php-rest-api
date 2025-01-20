@@ -21,8 +21,8 @@ function ManyToOne($many, $one, $property) {
     $result = [];
 
     foreach ($many as $manyItem):
-        $manyItem[$property] = array_filter($one, fn($item) => $manyItem[$property] == $item['id'])[0];
-        array_push($result, $manyItem);
+        $manyItem[$property] = array_filter($one, fn($item) => $manyItem[$property] == $item['id']);
+        array_push($result, ...$manyItem);
     endforeach;
 
     return $result;
@@ -34,7 +34,7 @@ function OneToMany($one, $many, $property) {
 
     foreach ($one as $oneItem):
 
-        if($oneItem[$property] == null) $oneItem[$property] =[];
+        if($oneItem[$property] == null) $oneItem[$property] = [];
         else {
             $ids = json_decode($oneItem[$property]);
             $oneItem[$property] = [];

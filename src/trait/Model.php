@@ -18,17 +18,6 @@ trait Model {
         return $this->queryBuilder->select('q')->from($this->table, 'q')->getQuery()->getArrayResult();
     }
 
-    /** Fetch all data where property has value */
-    public function where(string $property, mixed $value): array {
-        return $this->queryBuilder->select('q')->from($this->table, 'q')->where("q.{$property} = :{$property}")->setParameter(":{$property}", $value)->getQuery()->getArrayResult();
-    }
-
-    /** Selected content fetch all data */
-    public function select(array $args) {
-        $args = array_map(fn($item) => $item = "q.{$item}", $args);
-        return $this->queryBuilder->select($args)->from($this->table, 'q')->getQuery()->getArrayResult();
-    }
-
     /** Delete data by id */
     public function delete(string $id)  {
         return $this->queryBuilder->delete($this->table, 'q')->where("q.id = :id")->setParameter(':id', $id)->getQuery()->execute();

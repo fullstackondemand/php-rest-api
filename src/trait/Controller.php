@@ -9,28 +9,21 @@ trait Controller {
 
      /** Fetch all data */
      public function findAll($req, $res) {
-        $result = $this->model->all();
-        return response($req, $res, new Response(data: $result));
+        return response($req, $res, new Response(data: $this->model->all()));
     }
 
     /** Fetch data by id */
     public function findById($req, $res, $args) {
-        $result = $this->model->where('id', $args['id']);
-        checkNull(count($result) , $req);
-        return response($req, $res, args: new Response(data: $result));
+        $result = array_filter($this->model->all(), fn($item) => $item['id'] == $args['id']);
+        checkNull(count(...$result) , $req);
+        return response($req, $res, args: new Response(data: [...$result]));
     }
 
     /** Fetch data By slug */
     public function findBySlug($req, $res, $args)  {
-        $result = $this->model->where('slug', $args['slug']);
+        $result = array_filter($this->model->all(), fn($item) => $item['slug'] == $args['slug']);
         checkNull(count($result), $req);
-        return response($req, $res, args: new Response(data: $result));
-    }
-
-    /** Selected content fetch all data */
-    public function selectContent($req, $res, $args)  {
-        $result = $this->model->select(explode(",", $args['filter']));
-        return response($req, $res, args: new Response(data: $result));
+        return response($req, $res, args: new Response(data: [...$result]));
     }
 
     /** Delete data by id */
