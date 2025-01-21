@@ -13,23 +13,23 @@ class Category {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]
-    private int $id;
+    public int $id;
 
     #[ORM\Column(unique: true)]
-    private string $title;
+    public string $title;
 
     #[ORM\Column(unique: true)]
-    private string $slug;
+    public string $slug;
 
     #[ORM\Column]
-    private string $description;
+    public string $description;
 
     #[ORM\Column(name: "author_id")]
-    private int $authorId;
+    public int $authorId;
 
     #[ORM\Column(name: "created_at", insertable: false, updatable: false)]
-    private string $createdAt;
+    public string $createdAt;
 
     #[ORM\Column(name: "updated_at", insertable: false, updatable: false)]
-    private string $updatedAt;
+    public string $updatedAt;
 }
