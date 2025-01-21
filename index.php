@@ -12,7 +12,7 @@ $app = App::create(__DIR__);
 
 /** Routers */
 $app->get('/login/', [AuthorController::class, 'login']);
-$app->get('/logout/', [AuthorController::class, 'logout']);
+$app->get('/logout/', [AuthorController::class, 'logout'])->add(Authorization::class);
 $app->group('/category', CategoryRouter::class)->add(Authorization::class);
 $app->group('/author', AuthorRouter::class)->add(Authorization::class);
 
