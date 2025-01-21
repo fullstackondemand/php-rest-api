@@ -13,7 +13,8 @@
         "doctrine-orm",
         "symfony-cache",
         "php-di-container",
-        "middlewares-trailing-slash"
+        "middlewares-trailing-slash",
+        "firebase-php-jwt"
     ],
     "homepage": "https://github.com/fullstackondemand/php-rest-api",
     "license": "MIT",
@@ -43,6 +44,7 @@
         "doctrine/orm": "^2.20",
         "php-di/php-di": "^7.0",
         "symfony/cache": "^6.0",
-        "middlewares/trailing-slash": "^2.0"
+        "middlewares/trailing-slash": "^2.0",
+        "firebase/php-jwt": "^6.10"
     }
 }
