@@ -23,7 +23,7 @@ trait Controller {
             $filter = explode(",", $filter);
             
             foreach ($this->result as $item)
-            array_push($result, array_intersect_key($item, array_flip($filter)));
+            array_push($result, array_intersect_key((array) $item, array_flip($filter)));
         endif;
 
         return response($req, $res, new Response(data: $result));
