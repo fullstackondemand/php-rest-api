@@ -31,8 +31,10 @@ trait Controller {
 
     /** Fetch data by Column */
     public function findByColumn($req, $res, $args) {
+        
         foreach ($args as $key => $value)
         $result = array_filter($this->result, fn($item) => $item[$key] == $args[$key]);
+
         checkNull($result, $req);
         return response($req, $res, args: new Response(data: [...$result]));
     }
@@ -46,8 +48,8 @@ trait Controller {
 
     /** Insert data */
     public function create($req, $res, $args) {
-        $this->model->insert($req->getParsedBody());
-        return response($req, $res, new Response(message: "This item has been successfully added."));
+        $result = $this->model->insert($req->getParsedBody());
+        return response($req, $res, new Response(message: "This item has been successfully added.", data: $result));
     }
 
     /** Update by id */

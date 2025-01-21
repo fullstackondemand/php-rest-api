@@ -7,48 +7,54 @@ use Doctrine\ORM\EntityManager;
 trait Model {
 
     /** Variables Declaration */
-    private $queryBuilder;
+    private $repository;
 
     public function __construct(private EntityManager $entityManager) {
-        $this->queryBuilder = $entityManager->createQueryBuilder();
+        $this->repository = $entityManager->getRepository($this->table);
     }
 
     /** Fetch all data */
-    public function fetch(): array {
-        return $this->queryBuilder->select('q')->from($this->table, 'q')->getQuery()->getArrayResult();
+    public function fetchAll(): array {
+        return $this->repository->findAll();
+    }
+
+    /** Fetch all data by id */
+    public function fetchById($id): object {
+        return $this->repository->find($id);
     }
 
     /** Delete data by id */
-    public function delete(string $id)  {
-        return $this->queryBuilder->delete($this->table, 'q')->where("q.id = :id")->setParameter(':id', $id)->getQuery()->execute();
+    public function delete(string $id) {
+        $data = $this->repository->find($id);
+        $this->entityManager->remove($data);
+        $this->entityManager->flush();
+
+        return $data;
     }
 
     /** Update data by id */
     public function update(array $args, string $id) {
-        $result = 0;
+        $data = $this->repository->find($id);
 
-        foreach ($args as $key => $value):
-            if ($key == 'password')
-                $value = password_hash($value, PASSWORD_BCRYPT);
+        foreach ($args as $key => $value)
+            $data->__set($key, $value);
 
-            $result = $this->queryBuilder->update($this->table, "q")->set("q.$key", ":$key")->where("q.id = :id")->setParameter(":$key", $value)->setParameter('id', $id)->getQuery()->execute();
-        endforeach;
+        $this->entityManager->merge($data);
+        $this->entityManager->flush();
 
-        return $result;
+        return $data;
     }
 
     /** Insert data */
     public function insert(array $args) {
         $data = new $this->table;
 
-        foreach ($args as $key => $value):
-            if ($key == 'password')
-                $value = password_hash($value, PASSWORD_BCRYPT);
-
+        foreach ($args as $key => $value)
             $data->__set($key, $value);
-        endforeach;
 
         $this->entityManager->persist($data);
         $this->entityManager->flush();
+
+        return $data;
     }
 }
