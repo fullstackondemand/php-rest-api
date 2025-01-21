@@ -18,7 +18,12 @@ trait Model {
         return $this->repository->findAll();
     }
 
-    /** Fetch all data by id */
+    /** Fetch data by conditional */
+    public function fetchBy($array): array {
+        return $this->repository->findBy($array);
+    }
+
+    /** Fetch data by id */
     public function fetchById($id): object {
         return $this->repository->find($id);
     }
