@@ -18,11 +18,19 @@ class Authorization implements MiddlewareInterface {
     function process(Request $req, RequestHandler $handler): ResponseInterface {
         $token = $_COOKIE['SSID'] ?? str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;
 
-    if (!$token)
+        if (!$token)
             throw new HttpUnauthorizedException($req, 'Unauthorized request');
 
         /** Decode Json Web Token */
-        $decodedToken = (array) JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
+        try {
+            $decodedToken = (array) JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
+        }
+        catch (\Exception $e) {
+            $decodedToken = null;
+        }
+
+        if (!$decodedToken)
+            throw new HttpUnauthorizedException($req, "Invalid access token");
 
         /** Get Author Detail */
         $user = $this->user->fetchById($decodedToken['id']);

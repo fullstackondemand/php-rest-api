@@ -14,7 +14,7 @@ $app = App::create(__DIR__);
 $app->get('/login/', [UserController::class, 'login']);
 $app->get('/logout/', [UserController::class, 'logout'])->add(Authorization::class);
 $app->group('/category', CategoryRouter::class)->add(Authorization::class);
-$app->group('/author', UserRouter::class)->add(Authorization::class);
+$app->group('/user', UserRouter::class)->add(Authorization::class);
 
 /** Application Execute or Run */
 $app->run();
