@@ -33,7 +33,7 @@ trait Controller {
     public function findByColumn($req, $res, $args) {
         
         foreach ($args as $key => $value)
-        $result = array_filter($this->result, fn($item) => $item[$key] == $args[$key]);
+        $result = array_filter($this->result, fn($item) => $item->$key == $args[$key]);
 
         checkNull($result, $req);
         return response($req, $res, args: new Response(data: [...$result]));

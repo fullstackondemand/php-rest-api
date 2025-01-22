@@ -17,7 +17,7 @@ class Controller {
     /** Use core controller functions */
     use CoreController;
 
-    /** Author Login Function */
+    /** User Login Function */
     public function login($req, $res)  {
 
         /** Variables Declaration */
@@ -46,7 +46,7 @@ class Controller {
         return response($req, $res, new Response(message: "User logged in successfully.", data: ['user' => ['accessToken' => $accessToken]]));
     }
 
-    /** Author Logout Function */
+    /** User Logout Function */
     public function logout($req, $res) {
 
         // Remove Authorization Cookies
