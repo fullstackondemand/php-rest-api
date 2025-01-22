@@ -32,7 +32,7 @@ class Authorization implements MiddlewareInterface {
         if (!$decodedToken)
             throw new HttpUnauthorizedException($req, "Invalid access token");
 
-        /** Get Author Detail */
+        /** Get User Detail */
         $user = $this->user->fetchById($decodedToken['id']);
 
         if (!$user)
