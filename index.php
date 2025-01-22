@@ -1,8 +1,8 @@
 <?php
 use RestJS\App;
 use RestJS\Api\Category\Router as CategoryRouter;
-use RestJS\Api\Author\Router as AuthorRouter;
-use RestJS\Api\Author\Controller as AuthorController;
+use RestJS\Api\User\Router as UserRouter;
+use RestJS\Api\User\Controller as UserController;
 use RestJS\Middleware\Authorization;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -11,10 +11,10 @@ require __DIR__ . '/vendor/autoload.php';
 $app = App::create(__DIR__);
 
 /** Routers */
-$app->get('/login/', [AuthorController::class, 'login']);
-$app->get('/logout/', [AuthorController::class, 'logout'])->add(Authorization::class);
+$app->get('/login/', [UserController::class, 'login']);
+$app->get('/logout/', [UserController::class, 'logout'])->add(Authorization::class);
 $app->group('/category', CategoryRouter::class)->add(Authorization::class);
-$app->group('/author', AuthorRouter::class)->add(Authorization::class);
+$app->group('/author', UserRouter::class)->add(Authorization::class);
 
 /** Application Execute or Run */
 $app->run();

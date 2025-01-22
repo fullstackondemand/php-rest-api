@@ -7,13 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Server\MiddlewareInterface;
-use RestJS\Api\Author\Model as Author;
+use RestJS\Api\User\Model as User;
 use Slim\Exception\HttpUnauthorizedException;
 
 /** Authorization Middleware Function */
 class Authorization implements MiddlewareInterface {
 
-    function __construct(private Author $author) {}
+    function __construct(private User $user) {}
 
     function process(Request $req, RequestHandler $handler): ResponseInterface {
         $token = $_COOKIE['SSID'] ?? str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;
@@ -25,12 +25,12 @@ class Authorization implements MiddlewareInterface {
         $decodedToken = (array) JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
 
         /** Get Author Detail */
-        $author = $this->author->fetchById($decodedToken['id']);
+        $user = $this->user->fetchById($decodedToken['id']);
 
-        if (!$author)
+        if (!$user)
             throw new HttpUnauthorizedException($req, "Invalid access token");
 
-        $req->author = $author;
+        $req->user = $user;
 
         return $handler->handle($req);
     }

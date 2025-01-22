@@ -1,7 +1,7 @@
 <?php
-namespace RestJS\Api\Author;
+namespace RestJS\Api\User;
 use Slim\Routing\RouteCollectorProxy;
-use RestJS\Api\Author\Controller;
+use RestJS\Api\User\Controller;
 
 class Router {
     function __invoke(RouteCollectorProxy $router) {

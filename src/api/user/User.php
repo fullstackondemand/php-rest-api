@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Api\Author;
+namespace RestJS\Api\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event as Event;
 use Firebase\JWT\JWT;
 use RestJS\Trait\GetterAndSetter;
 
 #[ORM\Entity]
-#[ORM\Table('author')]
+#[ORM\Table('user')]
 #[ORM\HasLifecycleCallbacks]
-class Author {
+class User {
 
     // Get and Set Methods
     use GetterAndSetter;

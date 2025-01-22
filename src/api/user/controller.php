@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Api\Author;
+namespace RestJS\Api\User;
 use RestJS\Class\Response;
 use RestJS\Trait\Controller as CoreController;
-use RestJS\Api\Author\Model;
+use RestJS\Api\User\Model;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
 use function RestJS\response;
@@ -31,19 +31,19 @@ class Controller {
         if (!$username || !$password)
             throw new HttpBadRequestException($req, "Username or password is required.");
 
-        /** Verify Author Detail */
-        $author = $this->model->fetchBy(['username' => $username])[0];
-        $isValidPassword = $author->verifyPassword($password);
+        /** Verify User Detail */
+        $user = $this->model->fetchBy(['username' => $username])[0];
+        $isValidPassword = $user->verifyPassword($password);
 
         if (!$isValidPassword)
             throw new HttpUnauthorizedException($req, 'Invalid user credentials');
 
-        $accessToken = $author->generateAccessToken();
+        $accessToken = $user->generateAccessToken();
         
         // Add Authorization Cookies
         setcookie('SSID', $accessToken, time() + 84600 * intval($_ENV['ACCESS_TOKEN_EXPIRY']), secure: true, httponly: true);
 
-        return response($req, $res, new Response(message: "Author logged in successfully.", data: ['author' => ['accessToken' => $accessToken]]));
+        return response($req, $res, new Response(message: "User logged in successfully.", data: ['user' => ['accessToken' => $accessToken]]));
     }
 
     /** Author Logout Function */
@@ -51,6 +51,6 @@ class Controller {
 
         // Remove Authorization Cookies
         setcookie('SSID', '', time() - 1, secure: true, httponly: true);
-        return response($req, $res, new Response(message: "Author logged out successfully."));
+        return response($req, $res, new Response(message: "User logged out successfully."));
     }
 }
