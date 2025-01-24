@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace RestJS\Trait;
 
 use RestJS\Class\Response;
+use function RestJS\errorHandler;
 use function RestJS\response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
@@ -27,8 +28,13 @@ trait Authorization {
             throw new HttpBadRequestException($req, "Username or password is required.");
 
         /** Check User Entity */
-        $user = $this->model->findBy(['username' => $username])[0];
+        $user = errorHandler($this->model->findBy(['username' => $username]));
 
+        if (!$user)
+            throw new HttpUnauthorizedException($req, 'Invalid user credentials');
+
+        $user = $user[0];
+        
         /** Verify User Password */
         $isValidPassword = $user->verifyPassword($password);
 

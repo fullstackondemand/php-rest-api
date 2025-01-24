@@ -16,3 +16,12 @@ function response(Request $req, Response $res, mixed $args) {
 function checkNull($value, $req) {
     !boolval($value) && throw new HttpBadRequestException($req, "Something went wrong...");
 }
+
+/** Callback Error Handler Function */
+function errorHandler($callback) {
+    try {
+        return $callback;
+    } catch (\Exception $e) {
+        return null;
+    }
+}
