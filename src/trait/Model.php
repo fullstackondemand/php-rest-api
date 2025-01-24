@@ -25,7 +25,7 @@ trait Model {
     }
 
     /** Find Data by Id */
-    public function findById($id): object {
+    public function findById($id) {
         return $this->repository->find($id);
     }
 
