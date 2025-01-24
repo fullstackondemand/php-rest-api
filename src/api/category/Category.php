@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Api\Category;
+
 use Doctrine\ORM\Mapping as ORM;
 use RestJS\Trait\GetterAndSetter;
 
@@ -8,7 +9,7 @@ use RestJS\Trait\GetterAndSetter;
 #[ORM\Table('category')]
 class Category {
 
-    // Get and Set methods
+    // Trait Getter and Setter
     use GetterAndSetter;
 
     #[ORM\Id]

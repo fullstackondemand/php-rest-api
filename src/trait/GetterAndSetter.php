@@ -5,11 +5,13 @@ namespace RestJS\Trait;
 /** Getter and Setter Functions */
 trait GetterAndSetter {
 
-    public function __get($name) {
-        return $this->$name;
+    /** Get Value by Column */
+    public function __get($key) {
+        return $this->$key;
     }
 
-    public function __set($name, $value) {
-        $this->$name = $value;
+    /** Set Value by Column */
+    public function __set($key, $value) {
+        $this->$key = $value;
     }
 }

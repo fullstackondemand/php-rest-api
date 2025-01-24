@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Api\User;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event as Event;
 use Firebase\JWT\JWT;
@@ -11,7 +12,7 @@ use RestJS\Trait\GetterAndSetter;
 #[ORM\HasLifecycleCallbacks]
 class User {
 
-    // Get and Set Methods
+    // Trait Getter and Setter
     use GetterAndSetter;
 
     #[ORM\Id]

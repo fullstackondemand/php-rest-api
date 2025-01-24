@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
 namespace RestJS;
+
 use DI\Container;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
 use Doctrine\ORM\EntityManager;
 
+/** Database Established */
 class Database {
+
+    /** Database Connection Function */
     public static function connection() {
 
         /** Database Connection Configation */
@@ -29,7 +33,7 @@ class Database {
             ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/../src/api/'])
         ));
 
-        // Set container to create App with on AppFactory
+        // Set Container to Create Application with on AppFactory
         AppFactory::setContainer($container);
     }
 }

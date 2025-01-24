@@ -1,34 +1,35 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Trait;
+
 use Doctrine\ORM\EntityManager;
 
 /** Core Model Functions */
 trait Model {
 
-    /** Variables Declaration */
+    /** Create Repository from Table */
     private $repository;
 
     public function __construct(private EntityManager $entityManager) {
         $this->repository = $entityManager->getRepository($this->table);
     }
 
-    /** Fetch all data */
-    public function fetchAll(): array {
+    /** Find All Data */
+    public function findAll(): array {
         return $this->repository->findAll();
     }
 
-    /** Fetch data by conditional */
-    public function fetchBy($array): array {
+    /** Find Data by Conditional */
+    public function findBy($array): array {
         return $this->repository->findBy($array);
     }
 
-    /** Fetch data by id */
-    public function fetchById($id): object {
+    /** Find Data by Id */
+    public function findById($id): object {
         return $this->repository->find($id);
     }
 
-    /** Delete data by id */
+    /** Delete Data by Id */
     public function delete(string $id) {
         $data = $this->repository->find($id);
         $this->entityManager->remove($data);
@@ -37,7 +38,7 @@ trait Model {
         return $data;
     }
 
-    /** Update data by id */
+    /** Update Data by Id */
     public function update(array $args, string $id) {
         $data = $this->repository->find($id);
 
@@ -50,7 +51,7 @@ trait Model {
         return $data;
     }
 
-    /** Insert data */
+    /** Insert Data */
     public function insert(array $args) {
         $data = new $this->table;
 

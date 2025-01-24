@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Trait;
+
 use RestJS\Class\Response;
 use function RestJS\response;
 use Slim\Exception\HttpBadRequestException;
@@ -12,24 +13,29 @@ trait Authorization {
     /** Login Function */
     public function login($req, $res)  {
 
-        /** Variables Declaration */
+        /** Username Variable */
         $username = false;
+
+        /** Password Variable */
         $password = false;
 
-        /** Overide username amd password */
+        // Overide Username and Password Value
         extract( $req->getParsedBody() ?? []);
 
-        // Check login credentials
+        // Check Login Credentials
         if (!$username || !$password)
             throw new HttpBadRequestException($req, "Username or password is required.");
 
-        /** Verify Entity Detail */
-        $user = $this->model->fetchBy(['username' => $username])[0];
+        /** Check User Entity */
+        $user = $this->model->findBy(['username' => $username])[0];
+
+        /** Verify User Password */
         $isValidPassword = $user->verifyPassword($password);
 
         if (!$isValidPassword)
             throw new HttpUnauthorizedException($req, 'Invalid user credentials');
 
+        /** Generated Access Token  */
         $accessToken = $user->generateAccessToken();
         
         // Add Authorization Cookies
@@ -38,11 +44,12 @@ trait Authorization {
         return response($req, $res, new Response(message: "User logged in successfully.", data: ['accessToken' => $accessToken]));
     }
 
-    /** User Logout Function */
+    /** Logout Function */
     public function logout($req, $res) {
 
         // Remove Authorization Cookies
         setcookie('SSID', '', time() - 100, path: '/', secure: true, httponly: true);
+
         return response($req, $res, new Response(message: "User logged out successfully."));
     }
 }

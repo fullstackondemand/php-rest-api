@@ -1,61 +1,64 @@
 <?php
 declare(strict_types=1);
 namespace RestJS\Trait;
+
 use RestJS\Class\Response;
 use function RestJS\response, RestJS\checkNull;
 
 /** Core Controller Functions */
 trait Controller {
 
-    /** Variables Declaration */
-    private $result;
+    /** Entity or Table All Data */
+    private $data;
 
-     /** Fetch all data */
+     /** Find All Data */
      public function findAll($req, $res) {
 
-        /** Variables Declaration */
-        $result = $this->result;
+        /** Filter Column Query Params */
         $filter = $req->getQueryParams()['filter'] ?? null;
+
+        /** Filter Data */
+        $data = $this->data;
         
-        /** Selected column fetch all data */
+        // Selected Column Fetch All Data
         if ($filter):
-            $result = [];
+            $data = [];
             $filter = explode(",", $filter);
             
-            foreach ($this->result as $item)
-            array_push($result, array_intersect_key((array) $item, array_flip($filter)));
+            foreach ($this->data as $item)
+            array_push($data, array_intersect_key((array) $item, array_flip($filter)));
         endif;
 
-        return response($req, $res, new Response(data: $result));
+        return response($req, $res, new Response(data: $data));
     }
 
-    /** Fetch data by Column */
+    /** Find Data by Column */
     public function findByColumn($req, $res, $args) {
         
         foreach ($args as $key => $value)
-        $result = array_filter($this->result, fn($item) => $item->$key == $args[$key]);
+        $data = array_filter($this->data, fn($item) => $item->$key == $args[$key]);
 
-        checkNull($result, $req);
-        return response($req, $res, args: new Response(data: [...$result]));
+        checkNull($data, $req);
+        return response($req, $res, args: new Response(data: [...$data]));
     }
 
-    /** Delete data by id */
-    public function deleteById($req, $res, $args)  {
-        $result = $this->model->delete($args['id']);
-        checkNull($result, $req);
-        return response($req, $res, new Response(message: "This item has been successfully removed.", data: $result));
+    /** Delete Data by Id */
+    public function delete($req, $res, $args)  {
+        $data = $this->model->delete($args['id']);
+        checkNull($data, $req);
+        return response($req, $res, new Response(message: "This item has been successfully removed.", data: $data));
     }
 
-    /** Insert data */
-    public function create($req, $res, $args) {
-        $result = $this->model->insert($req->getParsedBody());
-        return response($req, $res, new Response(message: "This item has been successfully added.", data: $result));
+    /** Insert Data */
+    public function insert($req, $res, $args) {
+        $data = $this->model->insert($req->getParsedBody());
+        return response($req, $res, new Response(message: "This item has been successfully added.", data: $data));
     }
 
-    /** Update by id */
-    public function updateById($req, $res, $args) {
-        $result = $this->model->update($req->getParsedBody(), $args["id"]);
-        checkNull($result, $req);
-        return response($req, $res, new Response(message: "This item has been successfully updated.", data: $result));
+    /** Update by Id */
+    public function update($req, $res, $args) {
+        $data = $this->model->update($req->getParsedBody(), $args["id"]);
+        checkNull($data, $req);
+        return response($req, $res, new Response(message: "This item has been successfully updated.", data: $data));
     }
 }
