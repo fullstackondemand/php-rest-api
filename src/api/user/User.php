@@ -28,6 +28,12 @@ class User {
     #[ORM\Column]
     private string $password;
 
+    #[ORM\Column(nullable: true)]
+    public string $image;
+
+    #[ORM\Column(nullable: true)]
+    public string $logo;
+
     #[ORM\Column(name: "created_at", insertable: false, updatable: false)]
     public string $createdAt;
 
