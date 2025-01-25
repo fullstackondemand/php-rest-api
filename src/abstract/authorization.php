@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Trait;
+namespace RestJS\Abstract;
 
 use RestJS\Class\Response;
 use function RestJS\errorHandler;
@@ -8,11 +8,21 @@ use function RestJS\response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
 
-/** Authorization Functions */
-trait Authorization {
+/** Abstract Authorization Functions */
+abstract class Authorization {
+
+    /** Model Class */
+    private $model;
+
+    /** Abstract Function for Set Model Class */
+    abstract protected function setModel();
+
+    public function __construct() {
+        $this->model = $this->setModel();
+    }
 
     /** Login Function */
-    public function login($req, $res)  {
+    public function login($req, $res) {
 
         /** Username Variable */
         $username = false;
@@ -21,7 +31,7 @@ trait Authorization {
         $password = false;
 
         // Overide Username and Password Value
-        extract( $req->getParsedBody() ?? []);
+        extract($req->getParsedBody() ?? []);
 
         // Check Login Credentials
         if (!$username || !$password)
@@ -34,7 +44,7 @@ trait Authorization {
             throw new HttpUnauthorizedException($req, 'Invalid user credentials');
 
         $user = $user[0];
-        
+
         /** Verify User Password */
         $isValidPassword = $user->verifyPassword($password);
 
@@ -43,7 +53,7 @@ trait Authorization {
 
         /** Generated Access Token  */
         $accessToken = $user->generateAccessToken();
-        
+
         // Add Authorization Cookies
         setcookie('SSID', $accessToken, time() + 84600 * intval($_ENV['ACCESS_TOKEN_EXPIRY']), path: '/', secure: true, httponly: true);
 
