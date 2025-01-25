@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace RestJS\Class;
 
-/** Getter and Setter Functions */
-class GetterAndSetter {
+/** Entity Functions */
+class Entity {
 
     /** Get Value by Column */
     public function __get($key) {

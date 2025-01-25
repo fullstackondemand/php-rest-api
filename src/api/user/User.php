@@ -3,14 +3,12 @@ declare(strict_types=1);
 namespace RestJS\Api\User;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Event as Event;
-use Firebase\JWT\JWT;
-use RestJS\Class\GetterAndSetter;
+use RestJS\Class\AuthEntity;
 
 #[ORM\Entity]
 #[ORM\Table('user')]
 #[ORM\HasLifecycleCallbacks]
-class User extends GetterAndSetter {
+class User extends AuthEntity {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]
@@ -36,30 +34,4 @@ class User extends GetterAndSetter {
 
     #[ORM\Column(name: "updated_at", insertable: false, updatable: false)]
     public string $updatedAt;
-
-    #[ORM\PrePersist]
-    public function prePersist() {
-        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
-    }
-
-    #[ORM\PreUpdate]
-    public function preUpdate(Event\PreUpdateEventArgs $event) {
-        $passwordModify = $event->hasChangedField('password') ?? false;
-
-        if ($passwordModify)
-            $this->password = password_hash($this->password, PASSWORD_BCRYPT);
-    }
-
-    /** Verify Password Function */
-    public function verifyPassword($password) {
-       return password_verify($password, $this->password); 
-    }
-
-    /** Generate Access Token Function */
-    public function generateAccessToken() {
-        return JWT::encode([
-            'id' => $this->id,
-            'username' => $this->username
-        ], $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
-    }
 }
