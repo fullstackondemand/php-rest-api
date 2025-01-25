@@ -1,16 +1,23 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Trait;
+namespace RestJS\Abstract;
 
 use Doctrine\ORM\EntityManager;
 
-/** Core Model Functions */
-trait Model {
+/** Abstract Model Functions */
+abstract class Model {
 
     /** Create Repository from Table */
     private $repository;
 
+    /** Entity or Table */
+    private $table;
+
+    /** Abstract Function for Set Table Class */
+    abstract protected function setTable();
+
     public function __construct(private EntityManager $entityManager) {
+        $this->table = $this->setTable();
         $this->repository = $entityManager->getRepository($this->table);
     }
 
