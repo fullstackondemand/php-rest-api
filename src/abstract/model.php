@@ -7,18 +7,18 @@ use Doctrine\ORM\EntityManager;
 /** Abstract Model Functions */
 abstract class Model {
 
-    /** Create Repository from Table */
+    /** Create Repository from Entity */
     private $repository;
 
-    /** Entity or Table */
-    private $table;
+    /** Entity Class String */
+    private $entity;
 
-    /** Abstract Function for Set Table Class */
-    abstract protected function setTable();
+    /** Abstract Function for Set Entity Class String */
+    abstract protected function setEntity();
 
     public function __construct(private EntityManager $entityManager) {
-        $this->table = $this->setTable();
-        $this->repository = $entityManager->getRepository($this->table);
+        $this->entity = $this->setEntity();
+        $this->repository = $entityManager->getRepository($this->entity);
     }
 
     /** Find All Data */
@@ -60,7 +60,7 @@ abstract class Model {
 
     /** Insert Data */
     public function insert(array $args) {
-        $data = new $this->table;
+        $data = new $this->entity;
 
         foreach ($args as $key => $value)
             $data->__set($key, $value);

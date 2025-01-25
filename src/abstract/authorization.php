@@ -14,10 +14,10 @@ abstract class Authorization extends Controller {
     /** Login Function */
     public function login($req, $res) {
 
-        /** Username Variable */
+        /** Username */
         $username = false;
 
-        /** Password Variable */
+        /** Password */
         $password = false;
 
         // Overide Username and Password Value

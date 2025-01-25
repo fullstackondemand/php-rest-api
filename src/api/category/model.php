@@ -7,7 +7,7 @@ use RestJS\Api\Category\Category;
 
 class Model extends AbstractModel {
 
-    protected function setTable() {
+    protected function setEntity() {
         return Category::class;
     }
 }

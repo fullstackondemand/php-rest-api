@@ -14,9 +14,9 @@ use Slim\Exception\HttpUnauthorizedException;
 /** Authorization Middleware */
 class Authorization implements MiddlewareInterface {
 
-    function __construct(private User $user) {}
+    public function __construct(private User $user) {}
 
-    function process(Request $req, RequestHandler $handler): ResponseInterface {
+    public function process(Request $req, RequestHandler $handler): ResponseInterface {
 
         /** User Access Token */
         $token = $_COOKIE['SSID'] ?? str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;

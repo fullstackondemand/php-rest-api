@@ -7,7 +7,7 @@ use RestJS\Api\User\Controller;
 use RestJS\Middleware\Upload;
 
 class Router {
-    function __invoke(RouteCollectorProxy $router) {
+    public function __invoke(RouteCollectorProxy $router) {
         $router->get('/', [Controller::class, "findAll"]);
         $router->get('/{id:[0-9]+}/', [Controller::class, "findByColumn"]);
         $router->get('/{username:[a-z0-9-]+}/', [Controller::class, "findByColumn"]);

@@ -8,16 +8,16 @@ use function RestJS\response, RestJS\checkNull;
 /** Abstract Controller Functions */
 abstract class Controller {
 
-    /** Entity or Table All Data */
+    /** Entity All Data */
     private $data;
 
-    /** Model Class */
+    /** Model Class Object */
     private $model;
 
-    /** Abstract Function for Set Model Class */
+    /** Abstract Function for Set Model Class Object */
     abstract protected function setModel();
 
-    /** Abstract Function for Set Table Data */
+    /** Abstract Function for Set Entity All Data */
     abstract protected function setData();
 
     public function __construct() {

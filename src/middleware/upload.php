@@ -11,7 +11,7 @@ use Psr\Http\Message\UploadedFileInterface;
 /** File Upload Middleware */
 class Upload implements MiddlewareInterface {
 
-    function process(Request $req, RequestHandler $handler): ResponseInterface {
+    public function process(Request $req, RequestHandler $handler): ResponseInterface {
 
         /** User Upload File */
         $uploadedFile = $req->getUploadedFiles();
@@ -28,9 +28,8 @@ class Upload implements MiddlewareInterface {
         return $handler->handle($req);
     }
 
-
     /** File Upload to Server Function */
-    function moveUploadedFile(string $directory, string $type, UploadedFileInterface $uploadedFile) {
+    private function moveUploadedFile(string $directory, string $type, UploadedFileInterface $uploadedFile) {
 
         /** File Extension */
         $ext = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
@@ -42,8 +41,8 @@ class Upload implements MiddlewareInterface {
         !is_dir($directory) && mkdir($directory);
 
         // File Upload to Server
-        $uploadedFile->moveTo($directory . $filename);
+        $uploadedFile->moveTo("{$directory}{$filename}");
 
-        return $directory . $filename;
+        return "{$directory}{$filename}";
     }
 }

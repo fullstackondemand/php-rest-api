@@ -7,7 +7,7 @@ use RestJS\Api\User\User;
 
 class Model extends AbstractModel {
 
-    protected function setTable() {
+    protected function setEntity() {
         return User::class;
     }
 }
