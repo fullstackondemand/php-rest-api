@@ -2,15 +2,20 @@
 declare(strict_types=1);
 namespace RestJS\Api\Category;
 
-use RestJS\Trait\Controller as CoreController;
+use RestJS\Abstract\Controller as AbstractController;
 use RestJS\Api\Category\Model;
 
-class Controller {
+class Controller extends AbstractController {
 
     function __construct(private Model $model) {
-        $this->data = $this->model->findAll();
+        parent::__construct();
     }
 
-    // Trait Controller
-    use CoreController;
+    protected function setModel() {
+        return $this->model;
+    }
+
+    protected function setData() {
+        return $this->model->findAll();
+    }
 }
