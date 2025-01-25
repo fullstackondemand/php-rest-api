@@ -5,15 +5,12 @@ namespace RestJS\Api\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event as Event;
 use Firebase\JWT\JWT;
-use RestJS\Trait\GetterAndSetter;
+use RestJS\Class\GetterAndSetter;
 
 #[ORM\Entity]
 #[ORM\Table('user')]
 #[ORM\HasLifecycleCallbacks]
-class User {
-
-    // Trait Getter and Setter
-    use GetterAndSetter;
+class User extends GetterAndSetter {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]
@@ -26,7 +23,7 @@ class User {
     public string $username;
 
     #[ORM\Column]
-    private string $password;
+    protected string $password;
 
     #[ORM\Column(nullable: true)]
     public string $image;
