@@ -7,15 +7,15 @@ use RestJS\Api\User\Model;
 
 class Controller extends AuthController {
 
-    public function __construct(protected Model $model) {
+    public function __construct(protected Model $_model) {
         parent::__construct();
     }
 
     protected function setModel() {
-        return $this->model;
+        return $this->_model;
     }
 
     protected function setData() {
-        return $this->model->findAll();
+        return $this->_model->findAll();
     }
 }

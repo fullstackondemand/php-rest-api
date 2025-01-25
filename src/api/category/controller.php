@@ -7,15 +7,15 @@ use RestJS\Api\Category\Model;
 
 class Controller extends AbstractController {
 
-    public function __construct(private Model $model) {
+    public function __construct(private Model $_model) {
         parent::__construct();
     }
 
     protected function setModel() {
-        return $this->model;
+        return $this->_model;
     }
 
     protected function setData() {
-        return $this->model->findAll();
+        return $this->_model->findAll();
     }
 }

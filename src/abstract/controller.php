@@ -12,7 +12,7 @@ abstract class Controller {
     private $data;
 
     /** Model Class Object */
-    private $model;
+    protected $model;
 
     /** Abstract Function for Set Model Class Object */
     abstract protected function setModel();
