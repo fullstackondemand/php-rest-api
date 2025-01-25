@@ -7,7 +7,7 @@ use RestJS\Api\Category\Model;
 
 class Controller extends AbstractController {
 
-    function __construct(private Model $model) {
+    public function __construct(private Model $model) {
         parent::__construct();
     }
 

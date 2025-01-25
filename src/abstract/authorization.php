@@ -9,17 +9,7 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
 
 /** Abstract Authorization Functions */
-abstract class Authorization {
-
-    /** Model Class */
-    private $model;
-
-    /** Abstract Function for Set Model Class */
-    abstract protected function setModel();
-
-    public function __construct() {
-        $this->model = $this->setModel();
-    }
+abstract class Authorization extends Controller {
 
     /** Login Function */
     public function login($req, $res) {

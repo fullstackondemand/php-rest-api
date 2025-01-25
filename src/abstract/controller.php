@@ -20,7 +20,7 @@ abstract class Controller {
     /** Abstract Function for Set Table Data */
     abstract protected function setData();
 
-    function __construct() {
+    public function __construct() {
         $this->model = $this->setModel();
         $this->data = $this->setdata();
     }
