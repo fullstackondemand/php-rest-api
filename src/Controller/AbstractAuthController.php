@@ -28,7 +28,7 @@ class AbstractAuthController extends AbstractController {
             throw new HttpBadRequestException($req, "Username or password is required.");
 
         /** Check User Entity */
-        $user = errorHandler($this->model->findBy(['username' => $username]));
+        $user = errorHandler($this->_model->findBy(['username' => $username]));
 
         if (!$user)
             throw new HttpUnauthorizedException($req, 'Invalid user credentials');

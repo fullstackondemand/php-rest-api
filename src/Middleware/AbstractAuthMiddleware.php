@@ -14,10 +14,10 @@ use Slim\Exception\HttpUnauthorizedException;
 abstract class AbstractAuthMiddleware implements MiddlewareInterface {
 
     /** User Class Object */
-    private $user;
+    private $_user;
 
     public function __construct($user) {
-        $this->user = $user;
+        $this->_user = $user;
     }
 
     public function process(Request $req, RequestHandler $handler): ResponseInterface {
@@ -40,7 +40,7 @@ abstract class AbstractAuthMiddleware implements MiddlewareInterface {
             throw new HttpUnauthorizedException($req, "Invalid access token");
 
         /** Check User Entity */
-        $user = $this->user->findById($decodedToken['id']);
+        $user = $this->_user->findById($decodedToken['id']);
 
         if (!$user)
             throw new HttpUnauthorizedException($req, "Invalid access token");
