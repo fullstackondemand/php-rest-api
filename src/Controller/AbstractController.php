@@ -1,28 +1,22 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Abstract;
+namespace RestJS\Controller;
 
-use RestJS\Class\Response;
+use RestJS\Message\Response;
 use function RestJS\response, RestJS\checkNull;
 
 /** Abstract Controller Functions */
-abstract class Controller {
+class AbstractController {
 
     /** Entity All Data */
     private $data;
 
     /** Model Class Object */
-    protected $model;
+    private $model;
 
-    /** Abstract Function for Set Model Class Object */
-    abstract protected function setModel();
-
-    /** Abstract Function for Set Entity All Data */
-    abstract protected function setData();
-
-    public function __construct() {
-        $this->model = $this->setModel();
-        $this->data = $this->setdata();
+    public function __construct($model, $data) {
+        $this->data = $data;
+        $this->model = $model;
     }
 
     /** Find All Data */

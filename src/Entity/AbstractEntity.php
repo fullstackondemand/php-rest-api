@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Class;
+namespace RestJS\Entity;
 
-/** Entity Functions */
-class Entity {
+/** Abstract Entity Functions */
+class AbstractEntity {
 
     /** Get Value by Column */
     public function __get($key) {

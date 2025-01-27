@@ -3,12 +3,12 @@ declare(strict_types=1);
 namespace RestJS\Api\User;
 
 use Doctrine\ORM\Mapping as ORM;
-use RestJS\Class\AuthEntity;
+use RestJS\Entity\AbstractAuthEntity;
 
 #[ORM\Entity]
 #[ORM\Table('user')]
 #[ORM\HasLifecycleCallbacks]
-class User extends AuthEntity {
+class User extends AbstractAuthEntity {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]

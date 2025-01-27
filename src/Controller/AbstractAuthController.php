@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Abstract;
+namespace RestJS\Controller;
 
-use RestJS\Class\Response;
+use RestJS\Message\Response;
 use function RestJS\errorHandler;
 use function RestJS\response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
 
-/** Abstract Authorization Functions */
-abstract class Authorization extends Controller {
+/** Abstract Authorization Controller Functions */
+class AbstractAuthController extends AbstractController {
 
     /** Login Function */
     public function login($req, $res) {

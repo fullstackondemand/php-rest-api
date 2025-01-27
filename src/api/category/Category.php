@@ -3,11 +3,11 @@ declare(strict_types=1);
 namespace RestJS\Api\Category;
 
 use Doctrine\ORM\Mapping as ORM;
-use RestJS\Class\Entity;
+use RestJS\Entity\AbstractEntity;
 
 #[ORM\Entity]
 #[ORM\Table('category')]
-class Category extends Entity {
+class Category extends AbstractEntity {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace RestJS\Api\Category;
 
-use RestJS\Abstract\Model as AbstractModel;
+use RestJS\Model\AbstractModel;
 use RestJS\Api\Category\Category;
 
 class Model extends AbstractModel {

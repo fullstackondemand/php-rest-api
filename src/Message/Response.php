@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Class;
+namespace RestJS\Message;
 
 /** Create Response Object */
 class Response {

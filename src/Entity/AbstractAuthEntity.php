@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Class;
+namespace RestJS\Entity;
 
 use Firebase\JWT\JWT;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event as Event;
 
-/** Authorization Entity Functions */
-class AuthEntity extends Entity {
+/** Abstract Authorization Entity Functions */
+class AbstractAuthEntity extends AbstractEntity {
 
     #[ORM\PrePersist]
     public function prePersist() {

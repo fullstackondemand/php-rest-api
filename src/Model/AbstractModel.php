@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
-namespace RestJS\Abstract;
+namespace RestJS\Model;
 
 use Doctrine\ORM\EntityManager;
 
 /** Abstract Model Functions */
-abstract class Model {
+abstract class AbstractModel {
 
     /** Create Repository from Entity */
     private $repository;
