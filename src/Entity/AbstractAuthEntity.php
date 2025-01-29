@@ -6,7 +6,7 @@ use Firebase\JWT\JWT;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event as Event;
 
-/** Abstract Authorization Entity Functions */
+/** Abstract Authentication Entity Functions */
 class AbstractAuthEntity extends AbstractEntity {
 
     #[ORM\PrePersist]
@@ -31,7 +31,19 @@ class AbstractAuthEntity extends AbstractEntity {
     public function generateAccessToken() {
         return JWT::encode([
             'id' => $this->id,
-            'username' => $this->username
+            'iat' => time(),
+            'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'],
         ], $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
+    }
+
+    /** Generate Refresh Token Function */
+    public function generateRefreshToken() {
+        return JWT::encode([
+            'id' => $this->id,
+            'username' => $this->username,
+            'name' => $this->name,
+            'iat' => time(),
+            'exp' => time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'],
+        ], $_ENV['REFRESH_TOKEN_SECRET'], 'HS256');
     }
 }
