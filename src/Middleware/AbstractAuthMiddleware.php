@@ -23,27 +23,7 @@ abstract class AbstractAuthMiddleware implements MiddlewareInterface {
     public function process(Request $req, RequestHandler $handler): ResponseInterface {
 
         /** User Access Token */
-        $token = $_COOKIE['SSID'] ?? str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;
-
-        /** Server Access Token */
-        $refreshToken = $_COOKIE['RTID'] ?? null;
-
-        // Genrate Access Token to Refresh Token
-        if ($refreshToken && !$token):
-
-            /** Decode Json Web Token */
-            $decodedToken = (array) JWT::decode($refreshToken, new Key($_ENV['REFRESH_TOKEN_SECRET'], 'HS256'));
-
-            /** Check User Entity */
-            $user = $this->_user->findById($decodedToken['id']);
-
-            /** Generated Access Token  */
-            $accessToken = $user->generateAccessToken();
-
-            // Add Authorization Cookies
-            setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
-            $token = $accessToken;
-        endif;
+        $token = str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;
 
         if (!$token)
             throw new HttpUnauthorizedException($req, 'Unauthorized request');

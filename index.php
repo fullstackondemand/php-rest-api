@@ -13,6 +13,7 @@ $app = App::create(__DIR__);
 // Routers
 $app->post('/login/', [UserController::class, 'login']);
 $app->get('/logout/', [UserController::class, 'logout'])->add(Authorization::class);
+$app->post('/refreshtoken/', [UserController::class, 'regenerateAccessToken']);
 $app->group('/category', CategoryRouter::class)->add(Authorization::class);
 $app->group('/user', UserRouter::class)->add(Authorization::class);
 

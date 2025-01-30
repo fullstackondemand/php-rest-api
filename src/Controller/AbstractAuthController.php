@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace RestJS\Controller;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use RestJS\Message\Response;
 use function RestJS\errorHandler;
 use function RestJS\response;
@@ -62,5 +64,33 @@ class AbstractAuthController extends AbstractController {
         setcookie('RTID', '', time() - 100, path: '/api/', secure: true, httponly: true);
 
         return response($req, $res, new Response(message: "User logged out successfully."));
+    }
+
+    /** Regenrate Access Token to Refresh Token */
+    public function regenerateAccessToken($req, $res) {
+
+        /** User Refresh Token */
+        $refreshToken = $req->getParsedBody()['refresh_token'] ?? null;
+
+        try {
+            /** Decode Json Web Token */
+            $decodedToken = (array) JWT::decode($refreshToken, new Key($_ENV['REFRESH_TOKEN_SECRET'], 'HS256'));
+        } catch (\Exception $e) {
+            $decodedToken = null;
+        }
+
+        if (!$decodedToken)
+        throw new HttpUnauthorizedException($req, "Invalid access token");
+        
+        /** Check User Entity */
+        $user = $this->_model->findById($decodedToken['id']);
+
+        /** Generated Access Token  */
+        $accessToken = $user->generateAccessToken();
+
+        // Add Authorization Cookies
+        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
+
+        return response($req, $res, new Response(message: "User regenrate access token successfully.", data: ['accessToken' => $accessToken]));
     }
 }
