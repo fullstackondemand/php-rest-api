@@ -8,6 +8,6 @@ use RestJS\Api\Category\Model;
 class Controller extends AbstractController {
 
     public function __construct(private Model $model) { 
-        parent::__construct($model, $model->findAll());
+        parent::__construct($model);
     }
 }

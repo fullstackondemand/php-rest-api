@@ -8,44 +8,21 @@ use function RestJS\response, RestJS\checkNull;
 /** Abstract Controller Functions */
 class AbstractController {
 
-    /** Entity All Data */
-    private $_data;
-
     /** Model Class Object */
     protected $_model;
 
-    public function __construct($model, $data) {
-        $this->_data = $data;
+    public function __construct($model) {
         $this->_model = $model;
     }
 
     /** Find All Data */
     public function findAll($req, $res) {
-
-        /** Filter Column Query Params */
-        $filter = $req->getQueryParams()['filter'] ?? null;
-
-        /** Filter Data */
-        $data = $this->_data;
-
-        // Selected Column Fetch All Data
-        if ($filter):
-            $data = [];
-            $filter = explode(",", $filter);
-
-            foreach ($this->_data as $item)
-                array_push($data, array_intersect_key((array) $item, array_flip($filter)));
-        endif;
-
-        return response($req, $res, new Response(data: $data));
+        return response($req, $res, new Response(data: $this->_model->findAll()));
     }
 
     /** Find Data by Column */
     public function findByColumn($req, $res, $args) {
-
-        foreach ($args as $key => $value)
-            $data = array_filter($this->_data, fn($item) => $item->$key == $args[$key]);
-
+        $data = $this->_model->findBy($args);
         checkNull($data, $req);
         return response($req, $res, args: new Response(data: [...$data]));
     }

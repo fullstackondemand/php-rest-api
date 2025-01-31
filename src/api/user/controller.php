@@ -8,6 +8,6 @@ use RestJS\Api\User\Model;
 class Controller extends AbstractAuthController {
 
     public function __construct(private Model $model) { 
-        parent::__construct($model, $model->findAll());
+        parent::__construct($model);
     }
 }

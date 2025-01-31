@@ -44,18 +44,3 @@ function oneToMany($one, $many, $property) {
 
     return $result;
 }
-
-/** One Way Filter Relationship Function */
-function oneWayFilter($current, $filter, $addProperty, $findProperty) {
-    $result = [];
-
-    foreach ($current as $currentItem):
-        $currentItem->$addProperty = [];
-
-        $array = array_filter($filter, fn($item) => $currentItem->id == $item->$findProperty);
-        array_push($currentItem->$addProperty, ...$array);
-        array_push($result, $currentItem);
-    endforeach;
-
-    return $result;
-}
