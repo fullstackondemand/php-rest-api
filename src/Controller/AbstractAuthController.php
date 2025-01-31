@@ -51,9 +51,9 @@ class AbstractAuthController extends AbstractController {
 
         // Add Authorization Cookies
         setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
-        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/api/', secure: true, httponly: true);
+        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
 
-        return response($req, $res, new Response(message: "User logged in successfully.", data: ['accessToken' => $accessToken]));
+        return response($req, $res, new Response(message: "User logged in successfully.", data: ['user'=> $user, 'accessToken' => $accessToken, 'refreshToken' => $refreshToken]));
     }
 
     /** Logout Function */
@@ -61,7 +61,7 @@ class AbstractAuthController extends AbstractController {
 
         // Remove Authorization Cookies
         setcookie('SSID', '', time() - 100, path: '/', secure: true, httponly: true);
-        setcookie('RTID', '', time() - 100, path: '/api/', secure: true, httponly: true);
+        setcookie('RTID', '', time() - 100, path: '/', secure: true, httponly: true);
 
         return response($req, $res, new Response(message: "User logged out successfully."));
     }
