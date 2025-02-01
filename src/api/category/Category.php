@@ -6,24 +6,24 @@ use Doctrine\ORM\Mapping as ORM;
 use RestJS\Entity\AbstractEntity;
 
 #[ORM\Entity]
-#[ORM\Table('category')]
+#[ORM\Table('categories')]
 class Category extends AbstractEntity {
 
     #[ORM\Id]
     #[ORM\Column, ORM\GeneratedValue]
     public int $id;
 
-    #[ORM\Column(unique: true)]
+    #[ORM\Column]
     public string $title;
 
     #[ORM\Column(unique: true)]
     public string $slug;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     public string $description;
 
-    #[ORM\Column(name: "author_id")]
-    public int $authorId;
+    #[ORM\Column(name: "user_id")]
+    public string $userId;
 
     #[ORM\Column(name: "created_at", insertable: false, updatable: false)]
     public string $createdAt;

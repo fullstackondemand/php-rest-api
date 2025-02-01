@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use RestJS\Entity\AbstractAuthEntity;
 
 #[ORM\Entity]
-#[ORM\Table('user')]
+#[ORM\Table('users')]
 #[ORM\HasLifecycleCallbacks]
 class User extends AbstractAuthEntity {
 
@@ -14,7 +14,7 @@ class User extends AbstractAuthEntity {
     #[ORM\Column, ORM\GeneratedValue]
     public int $id;
 
-    #[ORM\Column(unique: true)]
+    #[ORM\Column]
     public string $name;
 
     #[ORM\Column(unique: true)]
@@ -25,9 +25,6 @@ class User extends AbstractAuthEntity {
 
     #[ORM\Column(nullable: true)]
     public string $image;
-
-    #[ORM\Column(nullable: true)]
-    public string $logo;
 
     #[ORM\Column(name: "created_at", insertable: false, updatable: false)]
     public string $createdAt;
