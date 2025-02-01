@@ -70,7 +70,7 @@ class AbstractAuthController extends AbstractController {
     public function regenerateAccessToken($req, $res) {
 
         /** User Refresh Token */
-        $refreshToken = $req->getParsedBody()['refresh_token'] ?? null;
+        $refreshToken = $req->getParsedBody()['refreshToken'] ?? null;
 
         try {
             /** Decode Json Web Token */

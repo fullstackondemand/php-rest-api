@@ -20,8 +20,7 @@
     "license": "MIT",
     "autoload": {
         "files": [
-            "src/function.php",
-            "src/relationship.php"
+            "src/function.php"
         ],
         "psr-4": {
             "RestJS\\": "src/"
