@@ -27,8 +27,8 @@ abstract class AbstractModel {
     }
 
     /** Find Data by Conditional */
-    public function findBy($array): array {
-        return $this->repository->findBy($array);
+    public function findBy(array $args): array {
+        return $this->repository->findBy($args);
     }
 
     /** Find Data by Id */
@@ -37,25 +37,30 @@ abstract class AbstractModel {
     }
 
     /** Delete Data by Id */
-    public function delete(string $id) {
-        $data = $this->repository->find($id);
-        $this->entityManager->remove($data);
-        $this->entityManager->flush();
+    public function delete(array $args) {
+        $data = $this->repository->findBy($args)[0] ?? null;
 
-        return $data;
+        if ($data):
+            $this->entityManager->remove($data);
+            $this->entityManager->flush();
+
+            return $data;
+        endif;
     }
 
     /** Update Data by Id */
-    public function update(array $args, string $id) {
-        $data = $this->repository->find($id);
+    public function update(array $data, array $args) {
+        $item = $this->repository->findBy($args)[0] ?? null;
 
-        foreach ($args as $key => $value)
-            $data->__set($key, $value);
+        if ($item):
+            foreach ($data as $key => $value)
+                $item->__set($key, $value);
 
-        $this->entityManager->merge($data);
-        $this->entityManager->flush();
+            $this->entityManager->merge($item);
+            $this->entityManager->flush();
 
-        return $data;
+            return $data;
+        endif;
     }
 
     /** Insert Data */

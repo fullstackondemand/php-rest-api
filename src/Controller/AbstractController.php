@@ -29,20 +29,20 @@ class AbstractController {
 
     /** Delete Data by Id */
     public function delete($req, $res, $args) {
-        $data = $this->_model->delete($args['id']);
+        $data = $this->_model->delete($args);
         checkNull($data, $req);
         return response($req, $res, new Response(message: "This item has been successfully removed.", data: $data));
     }
 
     /** Insert Data */
     public function insert($req, $res, $args) {
-        $data = $this->_model->insert($req->getParsedBody());
+        $data = $this->_model->insert([...$req->getParsedBody(), ...$args ]);
         return response($req, $res, new Response(message: "This item has been successfully added.", data: $data));
     }
 
     /** Update by Id */
     public function update($req, $res, $args) {
-        $data = $this->_model->update($req->getParsedBody(), $args["id"]);
+        $data = $this->_model->update($req->getParsedBody(), $args);
         checkNull($data, $req);
         return response($req, $res, new Response(message: "This item has been successfully updated.", data: $data));
     }
