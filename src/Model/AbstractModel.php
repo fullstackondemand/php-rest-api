@@ -38,41 +38,41 @@ abstract class AbstractModel {
 
     /** Delete Data by Id */
     public function delete(array $args) {
-        $data = $this->repository->findBy($args)[0] ?? null;
+        $row = $this->repository->findBy($args)[0] ?? null;
 
-        if ($data):
-            $this->entityManager->remove($data);
+        if ($row):
+            $this->entityManager->remove($row);
             $this->entityManager->flush();
 
-            return $data;
+            return $row;
         endif;
     }
 
     /** Update Data by Id */
     public function update(array $data, array $args) {
-        $item = $this->repository->findBy($args)[0] ?? null;
+        $row = $this->repository->findBy($args)[0] ?? null;
 
-        if ($item):
+        if ($row):
             foreach ($data as $key => $value)
-                $item->__set($key, $value);
+                $row->__set($key, $value);
 
-            $this->entityManager->merge($item);
+            $this->entityManager->merge($row);
             $this->entityManager->flush();
 
-            return $data;
+            return $row;
         endif;
     }
 
     /** Insert Data */
-    public function insert(array $args) {
-        $data = new $this->entity;
+    public function insert(array $data) {
+        $row = new $this->entity;
 
-        foreach ($args as $key => $value)
-            $data->__set($key, $value);
+        foreach ($data as $key => $value)
+            $row->__set($key, $value);
 
-        $this->entityManager->persist($data);
+        $this->entityManager->persist($row);
         $this->entityManager->flush();
 
-        return $data;
+        return $row;
     }
 }
