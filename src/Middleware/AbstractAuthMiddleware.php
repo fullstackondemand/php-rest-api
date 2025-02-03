@@ -23,7 +23,7 @@ abstract class AbstractAuthMiddleware implements MiddlewareInterface {
     public function process(Request $req, RequestHandler $handler): ResponseInterface {
 
         /** User Access Token */
-        $token = str_replace('Bearer ', '', $req->getHeader('Authorization'))[0] ?? $req->getQueryParams()['accessToken'] ?? null;
+        $token = str_replace('Bearer ', '', $req->getHeaderLine('Authorization')) ?? $req->getQueryParams()['accessToken'] ?? null;
 
         if (!$token)
             throw new HttpUnauthorizedException($req, 'Unauthorized request');

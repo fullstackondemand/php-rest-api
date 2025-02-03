@@ -31,14 +31,19 @@ abstract class AbstractModel {
         return $this->repository->findBy($args);
     }
 
+    /** Filter Data by Conditional */
+    public function filter(array $args): object {
+        return $this->repository->findOneBy($args);
+    }
+
     /** Find Data by Id */
-    public function findById($id) {
+    public function findById($id): object {
         return $this->repository->find($id);
     }
 
     /** Delete Data by Id */
     public function delete(array $args) {
-        $row = $this->repository->findBy($args)[0] ?? null;
+        $row = $this->repository->findOneBy($args) ?? null;
 
         if ($row):
             $this->entityManager->remove($row);
@@ -50,7 +55,7 @@ abstract class AbstractModel {
 
     /** Update Data by Id */
     public function update(array $data, array $args) {
-        $row = $this->repository->findBy($args)[0] ?? null;
+        $row = $this->repository->findOneBy($args) ?? null;
 
         if ($row):
             foreach ($data as $key => $value)
@@ -64,7 +69,7 @@ abstract class AbstractModel {
     }
 
     /** Insert Data */
-    public function insert(array $data) {
+    public function insert(array $data): object {
         $row = new $this->entity;
 
         foreach ($data as $key => $value)
