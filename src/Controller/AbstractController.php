@@ -4,6 +4,7 @@ namespace RestJS\Controller;
 
 use RestJS\Message\Response;
 use function RestJS\response, RestJS\checkNull;
+use Slim\Exception\HttpBadRequestException;
 
 /** Abstract Controller Functions */
 class AbstractController {
@@ -23,7 +24,6 @@ class AbstractController {
     /** Find Data by Column */
     public function findByColumn($req, $res, $args) {
         $data = $this->_model->findBy($args);
-        checkNull($data, $req);
         return response($req, $res, args: new Response(data: [...$data]));
     }
 
@@ -36,12 +36,18 @@ class AbstractController {
 
     /** Insert Data */
     public function insert($req, $res, $args) {
-        $data = $this->_model->insert([...$req->getParsedBody(), ...$args ]);
+        if (!$req->getParsedBody())
+            throw new HttpBadRequestException($req, "Please enter valid form data.");
+
+        $data = $this->_model->insert([...$req->getParsedBody(), ...$args]);
         return response($req, $res, new Response(message: "This item has been successfully added.", data: $data));
     }
 
     /** Update by Id */
     public function update($req, $res, $args) {
+        if (!$req->getParsedBody())
+            throw new HttpBadRequestException($req, "Please enter valid form data.");
+
         $data = $this->_model->update($req->getParsedBody(), $args);
         checkNull($data, $req);
         return response($req, $res, new Response(message: "This item has been successfully updated.", data: $data));
