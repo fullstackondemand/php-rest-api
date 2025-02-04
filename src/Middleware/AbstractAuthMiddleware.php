@@ -31,14 +31,10 @@ abstract class AbstractAuthMiddleware implements MiddlewareInterface {
         try {
             /** Decode Json Web Token */
             $decodedToken = (array) JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
-        }
-        catch (\Exception $e) {
-            $decodedToken = null;
-        }
-
-        if (!$decodedToken)
+        } catch (\Exception $e) {
             throw new HttpUnauthorizedException($req, "Invalid access token");
-
+        }
+        
         /** Check User Entity */
         $user = $this->_user->findById($decodedToken['id']);
 

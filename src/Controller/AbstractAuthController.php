@@ -5,7 +5,6 @@ namespace RestJS\Controller;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use RestJS\Message\Response;
-use function RestJS\errorHandler;
 use function RestJS\response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
@@ -30,7 +29,7 @@ class AbstractAuthController extends AbstractController {
             throw new HttpBadRequestException($req, "Username or password is required.");
 
         /** Check User Entity */
-        $user = errorHandler($this->_model->filter(['username' => $username]));
+        $user = $this->_model->filter(['username' => $username]);
 
         if (!$user)
             throw new HttpUnauthorizedException($req, 'Invalid user credentials');
@@ -74,11 +73,8 @@ class AbstractAuthController extends AbstractController {
             /** Decode Json Web Token */
             $decodedToken = (array) JWT::decode($refreshToken, new Key($_ENV['REFRESH_TOKEN_SECRET'], 'HS256'));
         } catch (\Exception $e) {
-            $decodedToken = null;
+            throw new HttpUnauthorizedException($req, "Invalid access token");
         }
-
-        if (!$decodedToken)
-        throw new HttpUnauthorizedException($req, "Invalid access token");
         
         /** Check User Entity */
         $user = $this->_model->findById($decodedToken['id']);

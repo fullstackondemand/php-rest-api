@@ -32,12 +32,12 @@ abstract class AbstractModel {
     }
 
     /** Filter Data by Conditional */
-    public function filter(array $args): object {
+    public function filter(array $args): object|null {
         return $this->repository->findOneBy($args);
     }
 
     /** Find Data by Id */
-    public function findById($id): object {
+    public function findById($id): object|null {
         return $this->repository->find($id);
     }
 
