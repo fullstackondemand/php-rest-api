@@ -85,6 +85,6 @@ class AbstractAuthController extends AbstractController {
         // Add Authorization Cookies
         setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
 
-        return response($req, $res, new Response(message: "User regenrate access token successfully.", data: ['accessToken' => $accessToken]));
+        return response($req, $res, new Response(message: "User regenrate access token successfully.", data: ['user' => $user, 'accessToken' => $accessToken]));
     }
 }
