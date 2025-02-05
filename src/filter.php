@@ -28,7 +28,13 @@ function filter($data, Request $req): array {
     /** Search Query Params */
     $search ??= null;
 
-    // Search Column Fetch All Data
+    /** Sort Query Params */
+    $sort ??= null;
+
+    /** Sort Order Query Params */
+    $order ??= 'asc';                    // asc or desc
+
+    // Search All Column Fetch All Data
     if ($search):
         foreach ($data as $item):
             $isSearch = false;
@@ -46,11 +52,19 @@ function filter($data, Request $req): array {
         endforeach;
     endif;
 
+    // Sorted Column Fetch All Data
+    if ($sort):
+        $filterData = empty($filterData) ? $data : $filterData;
+
+        usort($filterData, fn($a, $b) =>
+            $order == 'asc' ? $a->$sort > $b->$sort : $a->$sort < $b->$sort);
+    endif;
+
     // Selected Column Fetch All Data
     if ($filter):
         $filter = explode(",", $filter);
 
-        if ($search)
+        if ($search || $sort)
             $data = $filterData;
 
         $filterData = [];
@@ -61,8 +75,9 @@ function filter($data, Request $req): array {
 
     // According Pagination Fetch All Data
     if ($page):
-        if ($filter || $search)
+        if ($filter || $search || $sort)
             $data = $filterData;
+
         $filterData = array_slice($data, $page == 1 ? 0 : $limit * ($page - 1), (int) $limit);
     endif;
 
