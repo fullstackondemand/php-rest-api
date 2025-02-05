@@ -7,6 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 /** Filter Function for Response Data Manipulation */
 function filter($data, Request $req): array {
 
+    /** Query Fetch Data */
+    $data = array_reverse($data);
+
     // Get Query Params Values
     extract($req->getQueryParams() ?? []);
 
