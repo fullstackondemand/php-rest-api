@@ -22,9 +22,35 @@ function filter($data, Request $req): array {
     /** Per Page Limit Query Params */
     $limit ??= 10;
 
+    /** Search Query Params */
+    $search ??= null;
+
+    // Search Column Fetch All Data
+    if ($search):
+        foreach ($data as $item):
+            $isSearch = false;
+
+            foreach (array_values((array) $item) as $value):
+                $searchWith = str_contains(strtolower(trim(strip_tags((string) $value))), strtolower(trim($search)));
+
+                if ($searchWith)
+                    $isSearch = true;
+            endforeach;
+
+            if ($isSearch)
+                array_push($filterData, $item);
+
+        endforeach;
+    endif;
+
     // Selected Column Fetch All Data
     if ($filter):
         $filter = explode(",", $filter);
+
+        if ($search)
+            $data = $filterData;
+
+        $filterData = [];
 
         foreach ($data as $item)
             array_push($filterData, array_intersect_key((array) $item, array_flip($filter)));
@@ -32,7 +58,8 @@ function filter($data, Request $req): array {
 
     // According Pagination Fetch All Data
     if ($page):
-        $filter && $data = $filterData;
+        if ($filter || $search)
+            $data = $filterData;
         $filterData = array_slice($data, $page == 1 ? 0 : $limit * ($page - 1), (int) $limit);
     endif;
 
