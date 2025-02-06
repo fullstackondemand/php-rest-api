@@ -34,8 +34,21 @@ function filter($data, Request $req): array {
     /** Sort Order Query Params */
     $order ??= 'asc';                    // asc or desc
 
+    // Selected Column Fetch All Data
+    if ($filter):
+        $filter = explode(",", $filter);
+
+        foreach ($data as $item)
+            array_push($filterData, array_intersect_key((array) $item, array_flip($filter)));
+    endif;
+
     // Search All Column Fetch All Data
     if ($search):
+        if ($filter)
+            $data = $filterData;
+
+        $filterData = [];
+
         foreach ($data as $item):
             $isSearch = false;
 
@@ -57,20 +70,7 @@ function filter($data, Request $req): array {
         $filterData = empty($filterData) ? $data : $filterData;
 
         usort($filterData, fn($a, $b) =>
-            $order == 'asc' ? $a->$sort > $b->$sort : $a->$sort < $b->$sort);
-    endif;
-
-    // Selected Column Fetch All Data
-    if ($filter):
-        $filter = explode(",", $filter);
-
-        if ($search || $sort)
-            $data = $filterData;
-
-        $filterData = [];
-
-        foreach ($data as $item)
-            array_push($filterData, array_intersect_key((array) $item, array_flip($filter)));
+            $order == 'asc' ? ((object) $a)->$sort > ((object) $b)->$sort : ((object) $a)->$sort < ((object) $b)->$sort);
     endif;
 
     // According Pagination Fetch All Data
