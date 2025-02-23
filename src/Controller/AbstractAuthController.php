@@ -47,18 +47,18 @@ class AbstractAuthController extends AbstractController {
         $refreshToken = $user->generateRefreshToken();
 
         // Add Authorization Cookies
-        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
-        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
+        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true);
+        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/', secure: true);
 
-        return response($req, $res, new Response(message: "User logged in successfully.", data: ['user'=> $user, 'accessToken' => $accessToken, 'refreshToken' => $refreshToken]));
+        return response($req, $res, new Response(message: "User logged in successfully."));
     }
 
     /** Logout Function */
     public function logout($req, $res) {
 
         // Remove Authorization Cookies
-        setcookie('SSID', '', time() - 100, path: '/', secure: true, httponly: true);
-        setcookie('RTID', '', time() - 100, path: '/', secure: true, httponly: true);
+        setcookie('SSID', '', time() - 100, path: '/', secure: true);
+        setcookie('RTID', '', time() - 100, path: '/', secure: true);
 
         return response($req, $res, new Response(message: "User logged out successfully."));
     }
@@ -67,7 +67,7 @@ class AbstractAuthController extends AbstractController {
     public function regenerateAccessToken($req, $res) {
 
         /** User Refresh Token */
-        $refreshToken = $req->getParsedBody()['refreshToken'] ?? null;
+        $refreshToken = $_COOKIE['RTID'];
 
         try {
             /** Decode Json Web Token */
@@ -83,8 +83,8 @@ class AbstractAuthController extends AbstractController {
         $accessToken = $user->generateAccessToken();
 
         // Add Authorization Cookies
-        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true, httponly: true);
+        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true);
 
-        return response($req, $res, new Response(message: "User regenrate access token successfully.", data: ['user' => $user, 'accessToken' => $accessToken]));
+        return response($req, $res, new Response(message: "User regenrate access token successfully."));
     }
 }
