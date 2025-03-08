@@ -47,18 +47,18 @@ class AbstractAuthController extends AbstractController {
         $refreshToken = $user->generateRefreshToken();
 
         // Add Authorization Cookies
-        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true);
-        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/', secure: true);
+        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
+        setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
 
-        return response($req, $res, new Response(message: "User logged in successfully."));
+        return response($req, $res, new Response(data: ['userId' => $user->id, 'SSID' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']], 'RTID' => ['token' => $refreshToken, 'exp' => time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY']]]));
     }
 
     /** Logout Function */
     public function logout($req, $res) {
 
         // Remove Authorization Cookies
-        setcookie('SSID', '', time() - 100, path: '/', secure: true);
-        setcookie('RTID', '', time() - 100, path: '/', secure: true);
+        setcookie('SSID', '', time() - 100, path: '/api', secure: true, httponly: true);
+        setcookie('RTID', '', time() - 100, path: '/api', secure: true, httponly: true);
 
         return response($req, $res, new Response(message: "User logged out successfully."));
     }
@@ -83,8 +83,8 @@ class AbstractAuthController extends AbstractController {
         $accessToken = $user->generateAccessToken();
 
         // Add Authorization Cookies
-        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/', secure: true);
+        setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
 
-        return response($req, $res, new Response(message: "User regenrate access token successfully."));
+        return response($req, $res, new Response(data: ['SSID' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']]]));
     }
 }

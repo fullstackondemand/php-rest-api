@@ -12,8 +12,8 @@ $app = App::create(__DIR__);
 
 // Authentication Routes
 $app->post('/auth/login/', [UserController::class, 'login']);
-$app->get('/auth/logout/', [UserController::class, 'logout'])->add(Authorization::class);
-$app->get('/auth/refreshtoken/', [UserController::class, 'regenerateAccessToken']);
+$app->post('/auth/logout/', [UserController::class, 'logout'])->add(Authorization::class);
+$app->post('/auth/refreshtoken/', [UserController::class, 'regenerateAccessToken']);
 
 // Application Routes
 $app->group('/categories', CategoryRouter::class)->add(Authorization::class);
