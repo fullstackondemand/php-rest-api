@@ -1,6 +1,9 @@
 {
     "name": "restjs/php-rest-api",
     "description": "Create Rest API Application",
+    "scripts": {
+        "start": "php -S localhost:8888"
+    },
     "keywords": [
         "php",
         "composer",
