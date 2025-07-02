@@ -2,6 +2,7 @@
     "name": "restjs/php-rest-api",
     "version": "3.0.0",
     "description": "Minimalistic RESTful API with Modular Structure",
+    "type": "package",
     "scripts": {
         "start": "php -S localhost:8888"
     },
@@ -31,6 +32,20 @@
             "RestJS\\": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "RestJS/php-rest-api",
+                "version": "v3",
+                "source": {
+                    "url": "https://github.com/fullstackondemand/php-rest-api.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
     "authors": [
         {
             "name": "Pramod Singh",
