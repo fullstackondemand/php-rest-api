@@ -1,6 +1,6 @@
 {
     "name": "restjs/php-rest-api",
-    "version": "3.0.0",
+    "version": "3.0.2",
     "description": "Minimalistic RESTful API with Modular Structure",
     "type": "package",
     "scripts": {
