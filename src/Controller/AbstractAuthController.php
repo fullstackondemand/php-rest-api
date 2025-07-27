@@ -47,13 +47,13 @@ class AbstractAuthController extends AbstractController {
         $refreshToken = $user->generateRefreshToken();
 
         // Add Authorization Cookies
-        // setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
-        // setcookie('RTID', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
+        // setcookie('accessToken', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
+        // setcookie('refreshToken', $refreshToken, time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
 
         return response($req, $res, new Response(data: [
-            'userId' => $user->id, 
-            'SSID' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']], 
-            'RTID' => ['token' => $refreshToken, 'exp' => time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY']]
+            'user' => $user, 
+            'accessToken' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']], 
+            'refreshToken' => ['token' => $refreshToken, 'exp' => time() + 86400 * (int) $_ENV['REFRESH_TOKEN_EXPIRY']]
         ]));
     }
 
@@ -61,8 +61,8 @@ class AbstractAuthController extends AbstractController {
     public function logout($req, $res) {
 
         // Remove Authorization Cookies
-        // setcookie('SSID', '', time() - 100, path: '/api', secure: true, httponly: true);
-        // setcookie('RTID', '', time() - 100, path: '/api', secure: true, httponly: true);
+        // setcookie('accessToken', '', time() - 100, path: '/api', secure: true, httponly: true);
+        // setcookie('refreshToken', '', time() - 100, path: '/api', secure: true, httponly: true);
 
         return response($req, $res, new Response(message: "User logged out successfully."));
     }
@@ -71,7 +71,7 @@ class AbstractAuthController extends AbstractController {
     public function regenerateAccessToken($req, $res) {
 
         /** User Refresh Token */
-        $refreshToken = $_COOKIE['RTID'] ?? $req->getParsedBody()['refreshToken'] ?? null;
+        $refreshToken = $_COOKIE['refreshToken'] ?? $req->getParsedBody()['refreshToken'] ?? null;
 
         try {
             /** Decode Json Web Token */
@@ -87,10 +87,10 @@ class AbstractAuthController extends AbstractController {
         $accessToken = $user->generateAccessToken();
 
         // Add Authorization Cookies
-        // setcookie('SSID', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
+        // setcookie('accessToken', $accessToken, time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY'], path: '/api', secure: true, httponly: true);
 
         return response($req, $res, new Response(data: [
-            'SSID' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']]
+            'accessToken' => ['token' => $accessToken, 'exp' => time() + 60 * (int) $_ENV['ACCESS_TOKEN_EXPIRY']]
         ]));
     }
 }
