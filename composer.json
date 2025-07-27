@@ -25,8 +25,7 @@
     "license": "MIT",
     "autoload": {
         "files": [
-            "src/function.php",
-            "src/filter.php"
+            "src/functions.php"
         ],
         "psr-4": {
             "RestJS\\": "src/"
